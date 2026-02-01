@@ -108,11 +108,91 @@
 
 ---
 
-## 第5章：今後検討が必要な事項
+## 第5章：テスト戦略
+
+### 5-1. 設計原則
+
+生成AIによる自律的な開発を可能にするため、以下の原則を採用する：
+
+1. **ロジックとUnity依存の分離**: ビジネスロジックを純粋なC#クラス（POCO）として実装し、MonoBehaviourから分離
+2. **依存性注入（DI）**: インターフェースを通じて依存関係を注入し、テスト時にモック可能にする
+3. **イミュータブルなデータ構造**: 状態変更は新しいオブジェクトを返す形式で、副作用を最小化
+
+### 5-2. レイヤー別テスト方針
+
+| レイヤー | テスト種別 | 説明 |
+|---------|-----------|------|
+| Domain Logic | Edit Mode テスト | 最重要。BudgetSystem, PolicySystem等の純粋ロジック |
+| ViewModel | Edit Mode テスト | 状態管理とロジック呼び出しの検証 |
+| Data Layer | Edit Mode テスト | インターフェース経由でモック化 |
+| View Layer | Play Mode テスト | UI統合テスト（優先度低） |
+
+### 5-3. フォルダ構成
+
+```
+Assets/
+├── Scripts/
+│   ├── Domain/           # 純粋C#ロジック（テスト対象の中心）
+│   │   ├── Models/       # データモデル
+│   │   └── Systems/      # ビジネスロジック
+│   ├── Interfaces/       # インターフェース定義
+│   ├── Infrastructure/   # 外部依存（セーブ、API等）の実装
+│   └── Presentation/     # MonoBehaviour、UI関連
+├── Tests/
+│   ├── EditMode/         # Edit Modeテスト
+│   └── PlayMode/         # Play Modeテスト（UIテスト）
+```
+
+### 5-4. テスト可能な設計パターン
+
+```csharp
+// ❌ テストしにくい例
+public class BadBudgetManager : MonoBehaviour {
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            PlayerPrefs.SetInt("budget", budget - 100);  // 外部依存が直接
+        }
+    }
+}
+
+// ✅ テストしやすい例
+public class BudgetSystem {  // 純粋C#クラス
+    public BudgetState AllocateBudget(BudgetState current, AllocationRequest request) {
+        // 純粋な計算のみ、外部依存なし
+        return new BudgetState(current.Total - request.Amount, ...);
+    }
+}
+```
+
+### 5-5. モック戦略
+
+```csharp
+// インターフェース定義
+public interface IGameRepository {
+    GameState Load();
+    void Save(GameState state);
+}
+
+// 本番実装
+public class PlayerPrefsGameRepository : IGameRepository { ... }
+
+// テスト用モック
+public class MockGameRepository : IGameRepository {
+    public GameState StateToReturn { get; set; }
+    public GameState LastSavedState { get; private set; }
+
+    public GameState Load() => StateToReturn;
+    public void Save(GameState state) => LastSavedState = state;
+}
+```
+
+---
+
+## 第6章：今後検討が必要な事項
 
 - [ ] 開発言語・エンジンの最終決定
 - [ ] CI/CD環境の構築
-- [ ] テスト戦略（単体テスト、UIテスト）
+- [x] テスト戦略（単体テスト、UIテスト）
 - [ ] アナリティクス・クラッシュレポートの導入
 - [ ] マネタイズ方式（買い切り / 広告 / IAP）
 - [ ] ローカライズ対応の要否

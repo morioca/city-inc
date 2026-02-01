@@ -1,1 +1,28 @@
-CityInc
+# Unity
+CityInc/[Ll]ibrary/
+CityInc/[Tt]emp/
+CityInc/[Oo]bj/
+CityInc/[Bb]uild/
+CityInc/[Bb]uilds/
+CityInc/[Ll]ogs/
+CityInc/[Uu]ser[Ss]ettings/
+
+# IDE
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# macOS
+.DS_Store

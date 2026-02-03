@@ -1,3 +1,6 @@
+using System.IO;
+using UnityEngine;
+
 namespace TitleScreen
 {
     /// <summary>
@@ -5,7 +8,9 @@ namespace TitleScreen
     /// </summary>
     public class SaveDataChecker : ISaveDataChecker
     {
+        private const string SaveFileName = "save.dat";
+
         /// <inheritdoc/>
-        public bool HasSaveData => throw new System.NotImplementedException();
+        public bool HasSaveData => File.Exists(Path.Combine(Application.persistentDataPath, SaveFileName));
     }
 }

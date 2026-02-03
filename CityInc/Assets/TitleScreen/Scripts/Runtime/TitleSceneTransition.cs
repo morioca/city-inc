@@ -33,7 +33,7 @@ namespace TitleScreen
         /// </summary>
         public void TransitionToScenarioSelect()
         {
-            throw new NotImplementedException();
+            _sceneTransitioner.TransitionTo(ScenarioSelectSceneName);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace TitleScreen
         /// </summary>
         public void TransitionToGameWithLatestSave()
         {
-            throw new NotImplementedException();
+            _sceneTransitioner.TransitionTo(GameSceneName);
         }
     }
 }

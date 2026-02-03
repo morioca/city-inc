@@ -39,7 +39,28 @@ namespace TitleScreen
         /// <param name="saveDataChecker">The save data checker to determine continue button state.</param>
         public void Initialize(ISaveDataChecker saveDataChecker)
         {
-            throw new NotImplementedException();
+            NewGameButton.interactable = true;
+            SettingsButton.interactable = true;
+            ContinueButton.interactable = saveDataChecker.HasSaveData;
+
+            NewGameButton.onClick.AddListener(OnNewGameButtonClicked);
+            ContinueButton.onClick.AddListener(OnContinueButtonClicked);
+            SettingsButton.onClick.AddListener(OnSettingsButtonClicked);
+        }
+
+        private void OnNewGameButtonClicked()
+        {
+            OnNewGameSelected?.Invoke();
+        }
+
+        private void OnContinueButtonClicked()
+        {
+            OnContinueSelected?.Invoke();
+        }
+
+        private void OnSettingsButtonClicked()
+        {
+            OnSettingsSelected?.Invoke();
         }
     }
 }

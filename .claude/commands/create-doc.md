@@ -6,7 +6,7 @@
 2. ファイルに書き出す
   - 形式：Markdown
   - 言語：日本語
-  - パス：specifications/yyyy-mm-dd-subject.md
+  - パス：specs/yyyy-mm-dd-subject.md
     - yyyy-mm-dd は現在日付
   - セクション：
     - 要件、問題、または動機（適切なものを選択）

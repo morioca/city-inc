@@ -72,3 +72,16 @@ CityInc/Assets/
     └── Scripts/Runtime/
         └── TitleMenuController.cs # 既存（変更なし）
 ```
+
+## テストケース
+
+### TitleSceneIntegration
+
+シーン構成が仕様通りであることをインテグレーションテストで検証する。
+
+| ID | テスト内容 | テスト技法 |
+|----|-----------|-----------|
+| TSI-010 | TitleScene をロードすると、TitleMenuController コンポーネントが存在する | 状態テスト |
+| TSI-020 | TitleScene をロードすると、NewGameButton が TitleMenuController に設定されている | 状態テスト |
+| TSI-030 | TitleScene をロードすると、ContinueButton が TitleMenuController に設定されている | 状態テスト |
+| TSI-040 | TitleScene をロードすると、SettingsButton が TitleMenuController に設定されている | 状態テスト |

@@ -13,5 +13,4 @@ $ARGUMENTS ファイルの仕様を満たすコードを実装する。
 9. KISS および SOLID 原則を念頭に置いてリファクタリングし、合格するようにテストを再実行する
 10. 変更があればGit にコミットする
 
-注:
-- テストの実行方法については、@.claude/commands/run-tests.md ファイルを参照すること
+テストは全て、@.claude/commands/run-tests.md ファイルに従って実行する。

@@ -7,11 +7,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 City Inc (仮) is an iOS city management simulation game in the design/planning phase. The repository currently contains game design documentation only - no implementation code exists yet.
 
 
-## 行動規範
+## 開発ワークフロー
 
-Claude Code の行動規範、開発の進め方に関するグランドルールは、次のファイルを参照する。
+**仕様ファースト・テストファースト**を遵守する。コーディングを開始する前に、必ず以下の順序でコマンドを実行すること：
 
-- @.claude/rules/00-code-of-conduct.md
+1. `/create-doc` - 会話内容から仕様書を作成
+2. `/create-test-cases` - 仕様からテストケースを導出
+3. `/implement-code` - コード実装
+
+この順序を飛ばしてコーディングを開始してはならない。
+実装方針は各コマンドに従う。
 
 
 ## コーディングおよびテストのガイドライン
@@ -43,10 +48,3 @@ Claude Code の行動規範、開発の進め方に関するグランドルー�
 ## Key Design Decisions
 
 **Game Concept:** Players become mayors of fictional cities, making policy decisions and experiencing the consequences through turn-based gameplay (monthly turns). Target audience is urban-dwelling adults (20-50) interested in politics/governance.
-
-## Implementation Roadmap
-
-When development begins, follow the 3-phase approach in `docs/04-tdd.md`:
-1. **Phase 1 (MVP):** Core loop with 1 scenario, basic budget/policy systems
-2. **Phase 2:** Delegation system, parliament, events, detailed statistics
-3. **Phase 3:** Additional scenarios, progression system, achievements

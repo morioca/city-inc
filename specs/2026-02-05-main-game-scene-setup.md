@@ -44,14 +44,16 @@ Scenes/
 ### コンポーネント設計
 
 #### 変更対象
-- `TitleSceneTransition` (Scripts/Runtime/SceneTransition/TitleSceneTransition.cs)
-  - `OnNewGameRequested()` メソッドの遷移先を変更
-  - 変更前: `"ScenarioSelectionScene"`
-  - 変更後: `"MainGameScene"`
+- `TitleSceneTransition` (Assets/TitleScreen/Scripts/Runtime/TitleSceneTransition.cs)
+  - 定数 `ScenarioSelectSceneName` の値を変更
+    - 変更前: `"ScenarioSelectScene"`
+    - 変更後: `"MainGameScene"`
+  - `TransitionToScenarioSelect()` メソッドは変更なし（内部で使用する定数の値が変わることで遷移先が変わる）
+  - `TransitionToGameWithLatestSave()` メソッドは変更なし
 
 #### 新規作成
 - `MainGameScene.unity`
-  - 空のSceneとして作成
+  - 空のSceneとして `CityInc/Assets/Scenes/` に作成
   - Build Settingsに追加
 
 ### クラス図
@@ -65,8 +67,10 @@ TitleMenuController
 ### 実装手順
 1. `MainGameScene.unity` を `CityInc/Assets/Scenes/` 配下に作成
 2. Build Settings に MainGameScene を追加
-3. `TitleSceneTransition.cs` の遷移先を変更
-4. AssetDatabase.Refresh() を実行
+3. `TitleSceneTransition.cs` の `ScenarioSelectSceneName` 定数の値を `"MainGameScene"` に変更
+4. `TitleSceneTransitionTest.cs` の既存テスト TST-001 の期待値を更新
+5. AssetDatabase.Refresh() を実行してコンパイル
+6. テストを実行して検証
 
 ### テスト方針
 - Edit Modeテストでの検証は不要（Scene遷移のみ）
@@ -75,6 +79,37 @@ TitleMenuController
   2. 「新規ゲーム」ボタンをクリック
   3. MainGameScene に遷移することを確認
   4. コンソールエラーが出ないことを確認
+
+## テストケース
+
+### テスト対象クラス: TitleSceneTransition
+
+#### テスト技法
+- 同値分割法: メソッド呼び出しによる遷移先の検証
+- 状態遷移テスト: シーン遷移の動作検証
+
+#### テストケース一覧
+
+| ID | テストケース | 検証内容 |
+|----|------------|---------|
+| MGS-001 | TransitionToScenarioSelect_WhenCalled_TransitionsToMainGameScene | `TransitionToScenarioSelect()` 呼び出し時、MainGameScene へ遷移することを検証 |
+| MGS-010 | TransitionToGameWithLatestSave_WhenCalled_TransitionsToGameScene | `TransitionToGameWithLatestSave()` 呼び出し時、GameScene へ遷移することを検証（変更なし） |
+
+#### 詳細
+
+**MGS-001: TransitionToScenarioSelect_WhenCalled_TransitionsToMainGameScene**
+- 目的: 「新規ゲーム」ボタンから MainGameScene への遷移を検証
+- 前提条件: TitleSceneTransition が初期化されている
+- 操作: `TransitionToScenarioSelect()` を呼び出す
+- 期待結果: `SceneTransitioner.TransitionTo("MainGameScene")` が呼び出される
+- 備考: 既存テストケース TST-001 を更新（遷移先を ScenarioSelectScene から MainGameScene に変更）
+
+**MGS-010: TransitionToGameWithLatestSave_WhenCalled_TransitionsToGameScene**
+- 目的: 「続きから」ボタンから GameScene への遷移を検証
+- 前提条件: TitleSceneTransition が初期化されている
+- 操作: `TransitionToGameWithLatestSave()` を呼び出す
+- 期待結果: `SceneTransitioner.TransitionTo("GameScene")` が呼び出される
+- 備考: 既存テストケース TST-002 と同一（変更なし）
 
 ## 今後の拡張
 本仕様実装後、以下を段階的に追加:

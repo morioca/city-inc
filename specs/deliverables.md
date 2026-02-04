@@ -17,3 +17,5 @@
 - `SaveDataChecker` - セーブデータ存在確認
 - `TitleMenuController` - メニュー状態管理・イベント発火
 - `TitleSceneTransition` - 画面遷移制御（MainGameScene への遷移）
+- `UnitySceneTransitioner` - Unity SceneManagerのラッパー（入力検証付き）
+- `TitleSceneInitializer` - タイトル画面の初期化と各コンポーネントの統合

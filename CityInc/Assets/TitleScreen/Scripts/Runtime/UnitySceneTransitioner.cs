@@ -1,4 +1,5 @@
 using System;
+using UnityEngine.SceneManagement;
 
 namespace TitleScreen
 {
@@ -10,7 +11,17 @@ namespace TitleScreen
         /// <inheritdoc/>
         public void TransitionTo(string sceneName)
         {
-            throw new NotImplementedException();
+            if (sceneName == null)
+            {
+                throw new ArgumentNullException(nameof(sceneName));
+            }
+
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                throw new ArgumentException("Scene name cannot be empty.", nameof(sceneName));
+            }
+
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

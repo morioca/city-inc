@@ -11,14 +11,9 @@ namespace TitleScreen
         /// <inheritdoc/>
         public void TransitionTo(string sceneName)
         {
-            if (sceneName == null)
-            {
-                throw new ArgumentNullException(nameof(sceneName));
-            }
-
             if (string.IsNullOrEmpty(sceneName))
             {
-                throw new ArgumentException("Scene name cannot be empty.", nameof(sceneName));
+                throw new ArgumentException("Scene name cannot be null or empty.", nameof(sceneName));
             }
 
             SceneManager.LoadScene(sceneName);

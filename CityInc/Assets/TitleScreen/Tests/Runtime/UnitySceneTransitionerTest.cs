@@ -26,11 +26,11 @@ namespace TitleScreen
         }
 
         [Test]
-        public void TransitionTo_WhenCalledWithNullSceneName_ThrowsArgumentNullException()
+        public void TransitionTo_WhenCalledWithNullSceneName_ThrowsArgumentException()
         {
             var sut = new UnitySceneTransitioner();
 
-            Assert.That(() => sut.TransitionTo(null), Throws.ArgumentNullException);
+            Assert.That(() => sut.TransitionTo(null), Throws.ArgumentException);
         }
 
         [Test]

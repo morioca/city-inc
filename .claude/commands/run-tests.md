@@ -1,4 +1,4 @@
-テストは全て `UnityNaturalMCP` で実行する。
+`UnityNaturalMCP` 経由でテストを実行する。
 
 ## 適切なツールの選択
 

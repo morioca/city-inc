@@ -10,9 +10,9 @@ namespace TitleScreen
         private readonly ISceneTransitioner _sceneTransitioner;
 
         /// <summary>
-        /// The name of the scenario select scene.
+        /// The name of the main game scene.
         /// </summary>
-        public const string ScenarioSelectSceneName = "ScenarioSelectScene";
+        public const string MainGameSceneName = "MainGameScene";
 
         /// <summary>
         /// The name of the game scene.
@@ -29,11 +29,11 @@ namespace TitleScreen
         }
 
         /// <summary>
-        /// Transitions to the scenario select screen.
+        /// Transitions to the main game screen.
         /// </summary>
-        public void TransitionToScenarioSelect()
+        public void TransitionToMainGame()
         {
-            _sceneTransitioner.TransitionTo(ScenarioSelectSceneName);
+            _sceneTransitioner.TransitionTo(MainGameSceneName);
         }
 
         /// <summary>

@@ -5,16 +5,17 @@ namespace TitleScreen
     [TestFixture]
     public class TitleSceneTransitionTest
     {
-        // MGS-001: When TransitionToScenarioSelect is called, transitions to main game scene
+        // MGS-001: When TransitionToMainGame is called, transitions to main game scene
         [Test]
-        public void TransitionToScenarioSelect_WhenCalled_TransitionsToMainGameScene()
+        public void TransitionToMainGame_WhenCalled_TransitionsToMainGameScene()
         {
             var spySceneTransitioner = new SpySceneTransitioner();
             var sut = new TitleSceneTransition(spySceneTransitioner);
 
-            sut.TransitionToScenarioSelect();
+            sut.TransitionToMainGame();
 
-            Assert.That(spySceneTransitioner.LastTransitionedSceneName, Is.EqualTo("MainGameScene"));
+            Assert.That(spySceneTransitioner.LastTransitionedSceneName,
+                Is.EqualTo(TitleSceneTransition.MainGameSceneName));
         }
 
         // TST-002: When TransitionToGameWithLatestSave is called, transitions to game scene with latest save

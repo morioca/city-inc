@@ -212,6 +212,8 @@ TitleScene.unity の Canvas GameObject に以下を設定：
 | ID | テストケース | 検証内容 |
 |----|------------|---------|
 | UST-001 | TransitionTo_WhenCalledWithSceneName_LoadsScene | シーン名を指定してTransitionTo()を呼び出すと、SceneManager.LoadScene()が呼ばれることを検証 |
+| UST-010 | TransitionTo_WhenCalledWithNullSceneName_ThrowsArgumentNullException | null を指定してTransitionTo()を呼び出すと、ArgumentNullException がスローされることを検証 |
+| UST-020 | TransitionTo_WhenCalledWithEmptySceneName_ThrowsArgumentException | 空文字列を指定してTransitionTo()を呼び出すと、ArgumentException がスローされることを検証 |
 
 ### テスト対象クラス: TitleSceneInitializer
 
@@ -227,6 +229,9 @@ TitleScene.unity の Canvas GameObject に以下を設定：
 | TSI-002 | Awake_WhenCalled_SubscribesToNewGameEvent | Awake()実行後、OnNewGameSelectedイベントが購読されていることを検証 |
 | TSI-003 | Awake_WhenCalled_SubscribesToContinueEvent | Awake()実行後、OnContinueSelectedイベントが購読されていることを検証 |
 | TSI-004 | NewGameButton_WhenClicked_TransitionsToMainGame | 「新規ゲーム」ボタンクリック時、MainGameSceneへ遷移することを検証（統合テスト） |
+| TSI-010 | OnDestroy_WhenCalled_UnsubscribesFromNewGameEvent | OnDestroy()実行後、OnNewGameSelectedイベントの購読が解除されることを検証 |
+| TSI-020 | OnDestroy_WhenCalled_UnsubscribesFromContinueEvent | OnDestroy()実行後、OnContinueSelectedイベントの購読が解除されることを検証 |
+| TSI-030 | OnDestroy_WhenMenuControllerIsNull_DoesNotThrowException | MenuControllerがnullの状態でOnDestroy()を呼び出しても、例外がスローされないことを検証 |
 
 #### 詳細
 
@@ -257,6 +262,41 @@ TitleScene.unity の Canvas GameObject に以下を設定：
 - 操作: NewGameButtonをクリック
 - 期待結果: MainGameSceneに遷移する
 - 備考: Play Modeテストで実装
+
+**UST-010: TransitionTo_WhenCalledWithNullSceneName_ThrowsArgumentNullException**
+- 目的: null入力時の防御的プログラミングを検証
+- 前提条件: なし
+- 操作: `TransitionTo(null)` を呼び出す
+- 期待結果: ArgumentNullException がスローされる
+- 備考: Edit Modeテストで実装可能
+
+**UST-020: TransitionTo_WhenCalledWithEmptySceneName_ThrowsArgumentException**
+- 目的: 空文字列入力時の防御的プログラミングを検証
+- 前提条件: なし
+- 操作: `TransitionTo("")` を呼び出す
+- 期待結果: ArgumentException がスローされる
+- 備考: Edit Modeテストで実装可能
+
+**TSI-010: OnDestroy_WhenCalled_UnsubscribesFromNewGameEvent**
+- 目的: メモリリーク防止のためのイベント購読解除を検証
+- 前提条件: TitleSceneInitializerが初期化されている
+- 操作: OnDestroy()を呼び出す
+- 期待結果: OnNewGameSelectedイベントの購読が解除される
+- 備考: イベント発火時にハンドラが呼ばれないことで確認
+
+**TSI-020: OnDestroy_WhenCalled_UnsubscribesFromContinueEvent**
+- 目的: メモリリーク防止のためのイベント購読解除を検証
+- 前提条件: TitleSceneInitializerが初期化されている
+- 操作: OnDestroy()を呼び出す
+- 期待結果: OnContinueSelectedイベントの購読が解除される
+- 備考: イベント発火時にハンドラが呼ばれないことで確認
+
+**TSI-030: OnDestroy_WhenMenuControllerIsNull_DoesNotThrowException**
+- 目的: null参照例外の防止を検証
+- 前提条件: MenuControllerがnull
+- 操作: OnDestroy()を呼び出す
+- 期待結果: 例外がスローされない
+- 備考: 防御的プログラミングの検証
 
 ## 既存テストへの影響
 

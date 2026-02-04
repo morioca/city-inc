@@ -60,7 +60,6 @@ namespace TitleScreen
         }
 
         [UnityTest]
-        [Ignore("Integration test - requires TitleScene to be properly configured")]
         public IEnumerator NewGameButton_WhenClicked_TransitionsToMainGame()
         {
             SceneManager.LoadScene("TitleScene");

@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 1255597869}
   - component: {fileID: 1255597868}
   - component: {fileID: 1255597872}
+  - component: {fileID: 1255597873}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -510,6 +511,19 @@ MonoBehaviour:
   <NewGameButton>k__BackingField: {fileID: 100000005}
   <ContinueButton>k__BackingField: {fileID: 200000005}
   <SettingsButton>k__BackingField: {fileID: 300000005}
+--- !u!114 &1255597873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255597867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19663dd77da142b6ab22cec65328611, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  <MenuController>k__BackingField: {fileID: 1255597872}
 --- !u!1 &1636038836
 GameObject:
   m_ObjectHideFlags: 0

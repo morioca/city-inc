@@ -11,12 +11,10 @@ namespace TitleScreen
     public class UnitySceneTransitionerTest
     {
         [UnityTest]
-        [Ignore("Integration test - requires MainGameScene in build settings")]
         public IEnumerator TransitionTo_WhenCalledWithSceneName_LoadsScene()
         {
             var sut = new UnitySceneTransitioner();
             var testSceneName = "MainGameScene";
-            UnityEngine.TestTools.LogAssert.ignoreFailingMessages = true;
 
             sut.TransitionTo(testSceneName);
             yield return null;

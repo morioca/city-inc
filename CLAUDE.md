@@ -21,7 +21,7 @@ City Inc (仮) is an iOS city management simulation game in the design/planning 
 
 ## コーディングおよびテストのガイドライン
 
-次のファイルを参照する。
+コーディング時は次のファイルを参照する。
 
 - @.claude/rules/01-coding.md
 - @.claude/rules/02-testing.md

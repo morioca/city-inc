@@ -1,0 +1,21 @@
+using System;
+using Domain.Models;
+
+namespace Domain.Systems
+{
+    /// <summary>
+    /// Handles the turn progression logic.
+    /// </summary>
+    public class TurnManager
+    {
+        /// <summary>
+        /// Advance the game state by one month and return the new state.
+        /// </summary>
+        /// <param name="currentState">The current game state</param>
+        /// <returns>A new GameState with the date advanced by one month</returns>
+        public GameState ProgressToNextMonth(GameState currentState)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

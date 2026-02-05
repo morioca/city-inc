@@ -1,4 +1,3 @@
-using System;
 using Domain.Models;
 
 namespace Domain.Systems
@@ -15,7 +14,8 @@ namespace Domain.Systems
         /// <returns>A new GameState with the date advanced by one month</returns>
         public GameState ProgressToNextMonth(GameState currentState)
         {
-            throw new NotImplementedException();
+            var nextDate = currentState.CurrentDate.AddMonths(1);
+            return new GameState(nextDate);
         }
     }
 }

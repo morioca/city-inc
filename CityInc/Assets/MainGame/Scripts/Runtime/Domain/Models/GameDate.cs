@@ -35,7 +35,10 @@ namespace Domain.Models
         /// <returns>A new GameDate</returns>
         public GameDate AddMonths(int months)
         {
-            throw new NotImplementedException();
+            var totalMonths = (Year * 12 + (Month - 1)) + months;
+            var newYear = totalMonths / 12;
+            var newMonth = totalMonths % 12 + 1;
+            return new GameDate(newYear, newMonth);
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace Domain.Models
         /// <returns>The formatted display string</returns>
         public string ToDisplayString()
         {
-            throw new NotImplementedException();
+            return $"{Year}年{Month:D2}月";
         }
 
         /// <inheritdoc/>

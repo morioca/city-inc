@@ -17,7 +17,7 @@ namespace Presentation
         [field: SerializeField]
         public Button NextMonthButton { get; set; }
 
-        private TurnManager _turnManager;
+        private readonly TurnManager _turnManager = new TurnManager();
         private GameState _currentState;
 
         /// <summary>
@@ -26,6 +26,8 @@ namespace Presentation
         /// <param name="initialState">The initial game state</param>
         public void Initialize(GameState initialState)
         {
+            _currentState = initialState;
+            UpdateDateLabel();
         }
 
         /// <summary>
@@ -33,6 +35,13 @@ namespace Presentation
         /// </summary>
         public void OnNextMonthButtonClicked()
         {
+            _currentState = _turnManager.ProgressToNextMonth(_currentState);
+            UpdateDateLabel();
+        }
+
+        private void UpdateDateLabel()
+        {
+            DateLabel.text = _currentState.CurrentDate.ToDisplayString();
         }
     }
 }

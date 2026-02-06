@@ -31,3 +31,8 @@
 - `GameStatePresenter` - ゲーム状態のUI反映（MonoBehaviour）
 - `MainGameSceneInitializer` - メインゲーム画面の実行時UI生成と初期化
 - `MainGameSceneSetup` - メインゲーム画面のエディタ上でのUIセットアップユーティリティ
+
+#### UI共通
+- `SafeAreaLayout` - デバイスのセーフエリアに合わせてRectTransformを自動調整（ノッチ・ダイナミックアイランド対応）
+- `IScreenProvider` - スクリーン情報取得の抽象化インターフェース
+- `UnityScreenProvider` - Screen APIをラップした本番用実装

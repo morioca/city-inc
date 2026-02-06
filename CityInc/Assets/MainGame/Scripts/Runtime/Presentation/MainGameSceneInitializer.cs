@@ -1,5 +1,6 @@
 using Domain.Models;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +19,10 @@ namespace Presentation
         private void SetupScene()
         {
             var canvas = CreateCanvas();
-            var dateLabel = CreateDateLabel(canvas.transform);
-            var nextMonthButton = CreateNextMonthButton(canvas.transform);
-            CreateGameStatePresenter(canvas.transform, dateLabel, nextMonthButton);
+            var safeAreaPanel = CreateSafeAreaPanel(canvas.transform);
+            var dateLabel = CreateDateLabel(safeAreaPanel.transform);
+            var nextMonthButton = CreateNextMonthButton(safeAreaPanel.transform);
+            CreateGameStatePresenter(safeAreaPanel.transform, dateLabel, nextMonthButton);
         }
 
         private GameObject CreateCanvas()
@@ -37,6 +39,22 @@ namespace Presentation
             canvasObject.AddComponent<GraphicRaycaster>();
 
             return canvasObject;
+        }
+
+        private GameObject CreateSafeAreaPanel(Transform parent)
+        {
+            var panelObject = new GameObject("SafeAreaPanel");
+            panelObject.transform.SetParent(parent, false);
+
+            var rectTransform = panelObject.AddComponent<RectTransform>();
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.one;
+            rectTransform.offsetMin = Vector2.zero;
+            rectTransform.offsetMax = Vector2.zero;
+
+            panelObject.AddComponent<SafeAreaLayout>();
+
+            return panelObject;
         }
 
         private TMP_Text CreateDateLabel(Transform parent)

@@ -39,13 +39,30 @@ namespace UI
 
         private bool IsScreenSizeChanged()
         {
-            // Stub implementation
-            return false;
+            return _screenProvider.SafeArea != _lastSafeArea
+                || _screenProvider.Width != _lastScreenSize.x
+                || _screenProvider.Height != _lastScreenSize.y;
         }
 
         private void ApplySafeArea()
         {
-            // Stub implementation
+            Rect safeArea = _screenProvider.SafeArea;
+            int screenWidth = _screenProvider.Width;
+            int screenHeight = _screenProvider.Height;
+
+            Vector2 anchorMin = safeArea.position;
+            Vector2 anchorMax = safeArea.position + safeArea.size;
+
+            anchorMin.x /= screenWidth;
+            anchorMin.y /= screenHeight;
+            anchorMax.x /= screenWidth;
+            anchorMax.y /= screenHeight;
+
+            _rectTransform.anchorMin = anchorMin;
+            _rectTransform.anchorMax = anchorMax;
+
+            _lastSafeArea = safeArea;
+            _lastScreenSize = new Vector2Int(screenWidth, screenHeight);
         }
     }
 }

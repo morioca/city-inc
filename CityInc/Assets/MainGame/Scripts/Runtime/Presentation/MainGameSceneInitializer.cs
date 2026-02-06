@@ -2,6 +2,7 @@ using Domain.Models;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Presentation
@@ -19,6 +20,7 @@ namespace Presentation
         private void SetupScene()
         {
             var canvas = CreateCanvas();
+            CreateEventSystem();
             var safeAreaPanel = CreateSafeAreaPanel(canvas.transform);
             var dateLabel = CreateDateLabel(safeAreaPanel.transform);
             var nextMonthButton = CreateNextMonthButton(safeAreaPanel.transform);
@@ -39,6 +41,13 @@ namespace Presentation
             canvasObject.AddComponent<GraphicRaycaster>();
 
             return canvasObject;
+        }
+
+        private void CreateEventSystem()
+        {
+            var eventSystemObject = new GameObject("EventSystem");
+            eventSystemObject.AddComponent<EventSystem>();
+            eventSystemObject.AddComponent<StandaloneInputModule>();
         }
 
         private GameObject CreateSafeAreaPanel(Transform parent)

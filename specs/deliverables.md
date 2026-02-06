@@ -29,7 +29,7 @@
 - `GameState` - ゲーム全体の状態を保持するイミュータブルなオブジェクト
 - `TurnManager` - ターン進行ロジック（純粋C#クラス）
 - `GameStatePresenter` - ゲーム状態のUI反映（MonoBehaviour）
-- `MainGameSceneInitializer` - メインゲーム画面の実行時UI生成と初期化
+- `MainGameSceneInitializer` - メインゲーム画面の実行時UI生成と初期化（SafeAreaLayout適用済み）
 - `MainGameSceneSetup` - メインゲーム画面のエディタ上でのUIセットアップユーティリティ
 
 #### UI共通

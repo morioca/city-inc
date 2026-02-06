@@ -138,3 +138,38 @@ Canvas (Screen Space - Overlay)
 2. **結合テスト**
    - 実機またはDevice Simulatorで各種iPhone機種での表示確認
    - 画面回転時の動作確認
+
+## テストケース
+
+### SafeAreaLayoutクラス
+
+#### 初期化時の動作
+
+**使用するテスト技法**: 同値分割法（Safe Areaの位置・サイズの組み合わせ）
+
+| ID | テストケース | 入力条件 | 期待される結果 | 検証方法 |
+|----|------------|---------|---------------|---------|
+| TC-01 | Safe Areaが画面全体の場合にanchorが正しく設定される | Screen.safeArea=(0,0,1920,1080), Screen.size=(1920,1080) | anchorMin=(0,0), anchorMax=(1,1) | RectTransformのanchorMin/anchorMaxを確認 |
+| TC-03 | Safe Areaが画面上部にオフセットがある場合にanchorが正しく設定される（ノッチ対応） | Screen.safeArea=(0,100,1920,980), Screen.size=(1920,1080) | anchorMin=(0,0.0926), anchorMax=(1,1) | RectTransformのanchorMin.y/anchorMax.yを確認 |
+| TC-05 | Safe Areaが左右にオフセットがある場合にanchorが正しく設定される | Screen.safeArea=(50,0,1820,1080), Screen.size=(1920,1080) | anchorMin=(0.026,0), anchorMax=(0.974,1) | RectTransformのanchorMin.x/anchorMax.xを確認 |
+| TC-07 | Safe Areaが四辺すべてにオフセットがある場合にanchorが正しく設定される | Screen.safeArea=(50,100,1820,880), Screen.size=(1920,1080) | anchorMin=(0.026,0.0926), anchorMax=(0.974,0.907) | RectTransformのanchorMin/anchorMaxを確認 |
+
+#### 画面サイズ変更時の動作
+
+**使用するテスト技法**: 状態遷移テスト（画面サイズ・Safe Areaの変化）
+
+| ID | テストケース | 入力条件 | 期待される結果 | 検証方法 |
+|----|------------|---------|---------------|---------|
+| TC-10 | 画面サイズが変更されたときにanchorが再計算される | 初期: Screen.size=(1920,1080), SafeArea=(0,100,1920,980)<br>変更後: Screen.size=(2436,1125), SafeArea=(0,59,2436,1066) | anchorMin=(0,0.052), anchorMax=(1,1) | Update呼び出し後のRectTransformを確認 |
+| TC-12 | Safe Areaのみが変更されたときにanchorが再計算される | 初期: SafeArea=(0,100,1920,980)<br>変更後: SafeArea=(0,0,1920,1080) | anchorMin=(0,0), anchorMax=(1,1) | Update呼び出し後のRectTransformを確認 |
+| TC-14 | 画面サイズとSafe Areaが変更されないときに再計算されない | Screen.size=(1920,1080), SafeArea=(0,100,1920,980)で固定 | anchorは変更されない | Update呼び出し前後でRectTransformが同じ値 |
+
+#### エッジケース
+
+**使用するテスト技法**: 境界値分析
+
+| ID | テストケース | 入力条件 | 期待される結果 | 検証方法 |
+|----|------------|---------|---------------|---------|
+| TC-20 | 極小画面サイズでも正しく動作する | Screen.size=(100,100), SafeArea=(10,10,80,80) | anchorMin=(0.1,0.1), anchorMax=(0.9,0.9) | RectTransformのanchorMin/anchorMaxを確認 |
+| TC-22 | Safe Areaのwidthが0の場合でも例外が発生しない | Screen.size=(1920,1080), SafeArea=(0,0,0,1080) | anchorMin=(0,0), anchorMax=(0,1) | 例外が発生せず、anchorMin.x == anchorMax.xとなる |
+| TC-24 | Safe Areaのheightが0の場合でも例外が発生しない | Screen.size=(1920,1080), SafeArea=(0,0,1920,0) | anchorMin=(0,0), anchorMax=(1,0) | 例外が発生せず、anchorMin.y == anchorMax.yとなる |

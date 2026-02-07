@@ -14,4 +14,28 @@ $ARGUMENTS ファイルの仕様を満たすコードを実装する。
 10. 変更があればGit にコミットする
 11. 開発で機能を追加した場合 `/specs/deliverables.md` を更新する
 
-テストは全て、@.claude/commands/run-tests.md ファイルに従って実行する。
+テスト実行は全て test-runner agent に委譲する。Task ツールで subagent_type="test-runner" を指定して実行すること。
+
+## Test-Runner Agent の使用方法
+
+各テスト実行ステップでは、以下のように test-runner agent を呼び出す:
+
+- **Step 4** (テスト失敗確認):
+  ```
+  Task(subagent_type="test-runner", description="Run new tests",
+       prompt="Run tests for [modified class name]. The tests should fail.")
+  ```
+
+- **Step 7** (全テスト合格確認):
+  ```
+  Task(subagent_type="test-runner", description="Verify all tests pass",
+       prompt="Run all tests related to [feature/class]. All tests should pass.")
+  ```
+
+- **Step 9** (リファクタリング後テスト):
+  ```
+  Task(subagent_type="test-runner", description="Rerun tests after refactoring",
+       prompt="Re-run tests for [modified class] to verify refactoring didn't break anything.")
+  ```
+
+Agent には変更したクラス名、名前空間、アセンブリ名を明示的に伝えること。Agent がテスト範囲を適切に決定できる。

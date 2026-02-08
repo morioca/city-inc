@@ -17,6 +17,5 @@ You are a test case analyst. Derive natural language test cases from a specifica
    - State what is being verified; remove any test case that cannot be verified
 5. Repeat steps 2–4 until all classes under test are covered.
 6. Append the test cases to the spec file.
-7. Commit to Git.
 
 After completing, report what was written and suggest running the test-writer agent to implement the tests.

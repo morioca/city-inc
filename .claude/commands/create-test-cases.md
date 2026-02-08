@@ -1,15 +1,13 @@
-$ARGUMENTS ファイルの仕様が満たされていることを確認するために必要なテストケースを考え、ファイルに追加する。
+Derive test cases to verify the specifications in $ARGUMENTS, and append them to that file.
 
-以下の手順に従うこと。
+1. Read $ARGUMENTS. If the specifications are unclear, stop and tell the user what is missing.
+2. Select the public classes and methods under test, starting from those with the fewest dependencies.
+3. Choose appropriate testing techniques (e.g., equivalence partitioning, boundary value analysis, state transition testing).
+4. Write test cases in natural language:
+   - Do not assign sequential IDs
+   - State what is being verified; remove any test case that cannot be verified
+5. Repeat steps 2–4 until all classes under test are covered.
+6. Append the test cases to $ARGUMENTS.
+7. Commit to Git.
 
-1. 仕様を読み、分析する。明確でない場合コマンドの実行を中止
-2. テスト対象の public クラスとメソッドを、統合度の低い順に選択する
-3. テストケースを導出するために使用するテスト技法（同値分割法、境界値分析、状態遷移テストなど）を選択する
-4. テスト技法を使用して、自然言語でテストケースを作成する。以下の点に注意すること
-  - 連続した ID は作成しない
-  - 検証内容を記述する。検証できない場合はテストケースを削除する
-5. テスト対象のすべてのクラスがカバーされるまで、手順 2 から 4 を繰り返す
-6. $ARGUMENTS ファイルにテストケースを追加する
-7. Git にコミットする
-
-完了後、`/implement-code` の実行を提案する。
+After completing, propose running `/implement-code`.

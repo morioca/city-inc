@@ -1,17 +1,11 @@
-これまでの会話内容を仕様書としてファイルに書き出す。
+Distill the conversation so far into a specification document.
 
-以下の手順に従うこと。
+1. Verify that requirements (why), specifications (what), and design (how) are all clearly established in the conversation. If any are missing, stop and tell the user what is needed.
+2. Write the file:
+   - Language: English
+   - Format: Markdown
+   - Path: `specs/YYYY-MM-DD-<subject>.md` (use today's date)
+   - Sections: Requirements (or Problem, or Motivation — choose the most fitting), Specifications, Design
+3. Commit to Git.
 
-1. 会話中に、要件（なぜ）、仕様（何を）、設計（どのように）が明確になっているか分析する。明確でない場合コマンドの実行を中止する
-2. ファイルに書き出す
-  - 形式：Markdown
-  - 言語：日本語
-  - パス：specs/yyyy-mm-dd-subject.md
-    - yyyy-mm-dd は現在日付
-  - セクション：
-    - 要件、問題、または動機（適切なものを選択）
-    - 仕様
-    - 設計
-3. Git にコミットする
-
-完了後、`/create-test-cases` の実行を提案する。
+After completing, propose running `/create-test-cases`.

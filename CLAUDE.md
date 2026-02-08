@@ -1,50 +1,38 @@
-# Development Guidelines
+# City Inc — Development Guidelines
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Mandatory Workflow
 
-## Project Overview
+**IMPORTANT:** Do not write code directly. Always execute these commands in strict order:
 
-City Inc (仮) is an iOS city management simulation game in the design/planning phase. The repository currently contains game design documentation only - no implementation code exists yet.
+1. `/create-doc` — Create a specification document from the conversation
+2. `/create-test-cases` — Derive test cases from the specification
+3. `/implement-code` — Implement code using TDD
 
+Never skip any step. Never jump straight into coding.
 
-## 開発ワークフロー
+## Project Context
 
-**仕様ファースト・テストファースト**を遵守する。コーディングを開始する前に、必ず以下の順序でコマンドを実行すること：
+- **Type:** iOS city management simulation (turn-based, monthly turns)
+- **Player role:** Mayor making policy decisions for fictional cities
+- **Target audience:** Urban-dwelling adults (20–50) interested in politics/governance
+- **Current phase:** Design/planning with incremental implementation
 
-1. `/create-doc` - 会話内容から仕様書を作成
-2. `/create-test-cases` - 仕様からテストケースを導出
-3. `/implement-code` - コード実装
+## Rule Files
 
-この順序を飛ばしてコーディングを開始してはならない。
-実装方針は各コマンドに従う。
+Rule files in `.claude/rules/` auto-load when editing matching file types. Do not duplicate their content here.
 
+| File | Scope | Applies to |
+|------|-------|------------|
+| `01-coding.md` | Coding conventions | `**/*.cs` |
+| `02-testing.md` | Testing conventions | `**/Tests/**/*.cs` |
+| `10-unity-project.md` | Project and assembly structure | `**/*.cs` |
+| `11-unity-documentation.md` | Official documentation references | `**/*.cs` |
+| `12-unity.yaml` | Unity YAML file editing | `**/*.{meta,asset,prefab,unity}` |
 
-## コーディングおよびテストのガイドライン
+## Game Design Documents
 
-コーディング時は次のファイルを参照する。
-
-- @.claude/rules/01-coding.md
-- @.claude/rules/02-testing.md
-
-
-## Unityプロジェクトの構造およびガイドライン
-
-必要に応じて次のファイルを参照する。
-
-- @.claude/rules/10-unity-project.md
-- @.claude/rules/11-unity-documentation.md
-- @.claude/rules/12-unity-yaml.md
-
-
-## Documentation Structure
-
-- `docs/01-concept.md` - Game concept, vision, core experience, target personas
-- `docs/02-overview.md` - Game overview (basic info, world setting, rules, success metrics)
-- `docs/03-gdd.md` - Game Design Document (core loop, systems, UI/UX, scenarios, goals)
-- `docs/04-tdd.md` - Technical Design Document (tech stack, architecture, implementation roadmap)
-- `docs/coffee-inc-2-analysis/` - Reference game (Coffee Inc 2) analysis
-
-
-## Key Design Decisions
-
-**Game Concept:** Players become mayors of fictional cities, making policy decisions and experiencing the consequences through turn-based gameplay (monthly turns). Target audience is urban-dwelling adults (20-50) interested in politics/governance.
+- `docs/01-concept.md` — Concept, vision, core experience, target personas
+- `docs/02-overview.md` — Overview (world setting, rules, success metrics)
+- `docs/03-gdd.md` — Game Design Document (core loop, systems, UI/UX, scenarios)
+- `docs/04-tdd.md` — Technical Design Document (tech stack, architecture, roadmap)
+- `docs/coffee-inc-2-analysis/` — Reference game analysis (Coffee Inc 2)

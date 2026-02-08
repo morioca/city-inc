@@ -1,30 +1,22 @@
-$ARGUMENTS ファイルの仕様を満たすコードを実装する。
+Implement code that satisfies the specifications in $ARGUMENTS using TDD.
 
-以下の手順に従うこと。
+1. Verify $ARGUMENTS contains test cases. If not, stop and tell the user.
 
-1. 前提確認
-  - 仕様にテストケースが含まれていることを確認する
-  - テストケースがない場合、コマンドの実行を中止する
+2. Red Phase — Write failing tests:
+   - From the test cases, create only compilable type declarations and public method signatures (no implementation)
+   - Run tests via the test-runner agent; confirm they fail
+   - Repeat until all tests compile and fail as expected, then commit to Git
 
-2. Red Phase: 失敗するテストを作成
-  - 製品コードに対して、コンパイル可能な型とパブリックメソッドシグネチャのみを作成する
-  - テストケースに基づいてテストコードを実装する
-  - test-runner agent を使用してテストを実行し、失敗することを確認する
-  - Git にコミットする
+3. Green Phase — Make tests pass:
+   - Implement production code to pass the tests
+   - Run tests via the test-runner agent; confirm all pass
+   - Repeat until all tests pass, then commit to Git
 
-3. Green Phase: テストを通す実装
-  - 製品コードを実装する
-  - test-runner agent を使用してテストを実行し、すべて合格することを確認する
-  - Git にコミットする
+4. Refactor Phase:
+   - Refactor with KISS and SOLID principles in mind
+   - Run tests via the test-runner agent; confirm all still pass
+   - Commit to Git if there are any changes
 
-4. Refactor Phase: リファクタリング
-  - KISS および SOLID 原則を念頭に置いてリファクタリングする
-  - test-runner agent を使用してテストを再実行し、合格することを確認する
-  - 変更があれば Git にコミットする
+5. If new functionality was added, update `/specs/deliverables.md`.
 
-5. ドキュメント更新
-  - 開発で機能を追加した場合 `/specs/deliverables.md` を更新する
-
-テスト実行は test-runner agent に委譲する。Task ツールで `subagent_type="test-runner"` を指定し、変更したクラス名、名前空間、アセンブリ名を伝えること。
-
-完了後、必要に応じて次の仕様の実装を提案する。
+For test execution, use the Task tool with `subagent_type="test-runner"`, providing the affected class names, namespaces, and assembly names.

@@ -17,18 +17,6 @@ Never skip any step. Never jump straight into coding.
 - **Target audience:** Urban-dwelling adults (20–50) interested in politics/governance
 - **Current phase:** Design/planning with incremental implementation
 
-## Rule Files
-
-Rule files in `.claude/rules/` auto-load when editing matching file types. Do not duplicate their content here.
-
-| File | Scope | Applies to |
-|------|-------|------------|
-| `01-coding.md` | Coding conventions | `**/*.cs` |
-| `02-testing.md` | Testing conventions | `**/Tests/**/*.cs` |
-| `10-unity-project.md` | Project and assembly structure | `**/*.cs` |
-| `11-unity-documentation.md` | Official documentation references | `**/*.cs` |
-| `12-unity.yaml` | Unity YAML file editing | `**/*.{meta,asset,prefab,unity}` |
-
 ## Game Design Documents
 
 - `docs/01-concept.md` — Concept, vision, core experience, target personas

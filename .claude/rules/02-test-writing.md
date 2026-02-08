@@ -3,7 +3,7 @@ paths:
   - "**/Tests/**/*.cs"
 ---
 
-# Testing Guidelines
+# Test writing Guidelines
 
 ## Placement
 
@@ -68,26 +68,3 @@ catch (ArgumentException expectedException)
 }
 ```
 
-## Running Tests
-
-1. Call `RefreshAssets` to compile
-2. Call `GetCompileLogs` — abort if any compile errors exist
-3. Run tests:
-   - Code under `Editor/` → `RunEditModeTests` MCP tool
-   - Code under `Runtime/` → `RunPlayModeTests` MCP tool
-4. Always filter by assembly, group, or test name to minimize execution scope
-
-## Interpreting Results
-
-- Passed: Continue
-- Failed: Investigate and fix (see procedure below)
-- Inconclusive: Treat as failure
-- Skipped: Ignore
-
-Failure resolution procedure:
-
-1. Read the error message to identify the cause
-2. Compare expected vs. actual values
-3. Fix the issue and re-run the failing test
-4. If still failing, review both the test and the implementation
-5. If failing a second time, summarize the failure details and ask the user for guidance

@@ -2,7 +2,7 @@
 name: test-writer
 description: Writes test code from natural language test cases following project conventions.
 tools: Read, Write, Edit, Glob, Grep
-model: Sonnet
+model: sonnet
 ---
 
 You are a test code writer. Create test code from natural language test cases.

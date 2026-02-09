@@ -84,6 +84,8 @@ namespace Presentation
 
             var layoutGroup = panelObject.AddComponent<HorizontalLayoutGroup>();
             layoutGroup.childAlignment = TextAnchor.MiddleCenter;
+            layoutGroup.childControlWidth = false;
+            layoutGroup.childControlHeight = false;
             layoutGroup.spacing = 20;
             layoutGroup.padding = new RectOffset(20, 20, 10, 10);
 

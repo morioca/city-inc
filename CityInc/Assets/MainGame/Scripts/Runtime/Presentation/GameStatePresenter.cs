@@ -15,6 +15,15 @@ namespace Presentation
         public TMP_Text DateLabel { get; set; }
 
         [field: SerializeField]
+        public TMP_Text PopulationLabel { get; set; }
+
+        [field: SerializeField]
+        public TMP_Text BudgetLabel { get; set; }
+
+        [field: SerializeField]
+        public TMP_Text ApprovalRatingLabel { get; set; }
+
+        [field: SerializeField]
         public Button NextMonthButton { get; set; }
 
         private readonly TurnManager _turnManager = new TurnManager();
@@ -28,6 +37,7 @@ namespace Presentation
         {
             _currentState = initialState;
             UpdateDateLabel();
+            UpdateMetricLabels();
         }
 
         /// <summary>
@@ -42,6 +52,11 @@ namespace Presentation
         private void UpdateDateLabel()
         {
             DateLabel.text = _currentState.CurrentDate.ToDisplayString();
+        }
+
+        private void UpdateMetricLabels()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -174,5 +174,93 @@ namespace Presentation
 
             Assert.That(presenter.transform.parent.name, Is.EqualTo("SafeAreaPanel"));
         }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_CreatesStatusBarPanel()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var statusBarPanel = GameObject.Find("StatusBarPanel");
+
+            Assert.That(statusBarPanel, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_StatusBarPanelIsUnderSafeAreaPanel()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var statusBarPanel = GameObject.Find("StatusBarPanel");
+
+            Assert.That(statusBarPanel.transform.parent.name, Is.EqualTo("SafeAreaPanel"));
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelExists()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var populationLabel = GameObject.Find("PopulationLabel")?.GetComponent<TMP_Text>();
+
+            Assert.That(populationLabel, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelExists()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var budgetLabel = GameObject.Find("BudgetLabel")?.GetComponent<TMP_Text>();
+
+            Assert.That(budgetLabel, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelExists()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel")?.GetComponent<TMP_Text>();
+
+            Assert.That(approvalRatingLabel, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelShowsInitialValue()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var populationLabel = GameObject.Find("PopulationLabel")?.GetComponent<TMP_Text>();
+
+            Assert.That(populationLabel.text, Is.EqualTo("人口 50,000人"));
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelShowsInitialValue()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var budgetLabel = GameObject.Find("BudgetLabel")?.GetComponent<TMP_Text>();
+
+            Assert.That(budgetLabel.text, Is.EqualTo("財政 100,000,000円"));
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelShowsInitialValue()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel")?.GetComponent<TMP_Text>();
+
+            Assert.That(approvalRatingLabel.text, Is.EqualTo("支持率 60%"));
+        }
     }
 }

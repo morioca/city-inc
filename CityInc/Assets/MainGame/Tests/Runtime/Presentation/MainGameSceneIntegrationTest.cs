@@ -262,5 +262,77 @@ namespace Presentation
 
             Assert.That(approvalRatingLabel.text, Is.EqualTo("支持率 60%"));
         }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelHasLayoutElement()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var populationLabel = GameObject.Find("PopulationLabel");
+            var layoutElement = populationLabel?.GetComponent<LayoutElement>();
+
+            Assert.That(layoutElement, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelHasCorrectPreferredWidth()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var populationLabel = GameObject.Find("PopulationLabel");
+            var layoutElement = populationLabel?.GetComponent<LayoutElement>();
+
+            Assert.That(layoutElement.preferredWidth, Is.EqualTo(200));
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelHasLayoutElement()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var budgetLabel = GameObject.Find("BudgetLabel");
+            var layoutElement = budgetLabel?.GetComponent<LayoutElement>();
+
+            Assert.That(layoutElement, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelHasCorrectPreferredWidth()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var budgetLabel = GameObject.Find("BudgetLabel");
+            var layoutElement = budgetLabel?.GetComponent<LayoutElement>();
+
+            Assert.That(layoutElement.preferredWidth, Is.EqualTo(250));
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelHasLayoutElement()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel");
+            var layoutElement = approvalRatingLabel?.GetComponent<LayoutElement>();
+
+            Assert.That(layoutElement, Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelHasCorrectPreferredWidth()
+        {
+            yield return SceneManager.LoadSceneAsync("MainGameScene");
+            yield return null;
+
+            var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel");
+            var layoutElement = approvalRatingLabel?.GetComponent<LayoutElement>();
+
+            Assert.That(layoutElement.preferredWidth, Is.EqualTo(150));
+        }
     }
 }

@@ -95,6 +95,13 @@ namespace Presentation
             var labelObject = new GameObject("PopulationLabel");
             labelObject.transform.SetParent(parent, false);
 
+            var rectTransform = labelObject.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(200, 50);
+
+            var layoutElement = labelObject.AddComponent<LayoutElement>();
+            layoutElement.preferredWidth = 200;
+            layoutElement.preferredHeight = 50;
+
             var textComponent = labelObject.AddComponent<TextMeshProUGUI>();
             textComponent.text = "人口 50,000人";
             textComponent.fontSize = 24;
@@ -109,6 +116,13 @@ namespace Presentation
             var labelObject = new GameObject("BudgetLabel");
             labelObject.transform.SetParent(parent, false);
 
+            var rectTransform = labelObject.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(250, 50);
+
+            var layoutElement = labelObject.AddComponent<LayoutElement>();
+            layoutElement.preferredWidth = 250;
+            layoutElement.preferredHeight = 50;
+
             var textComponent = labelObject.AddComponent<TextMeshProUGUI>();
             textComponent.text = "財政 100,000,000円";
             textComponent.fontSize = 24;
@@ -122,6 +136,13 @@ namespace Presentation
         {
             var labelObject = new GameObject("ApprovalRatingLabel");
             labelObject.transform.SetParent(parent, false);
+
+            var rectTransform = labelObject.AddComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(150, 50);
+
+            var layoutElement = labelObject.AddComponent<LayoutElement>();
+            layoutElement.preferredWidth = 150;
+            layoutElement.preferredHeight = 50;
 
             var textComponent = labelObject.AddComponent<TextMeshProUGUI>();
             textComponent.text = "支持率 60%";

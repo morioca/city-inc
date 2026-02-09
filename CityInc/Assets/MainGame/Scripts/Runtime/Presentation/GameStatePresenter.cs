@@ -56,7 +56,9 @@ namespace Presentation
 
         private void UpdateMetricLabels()
         {
-            throw new System.NotImplementedException();
+            PopulationLabel.text = string.Format("人口 {0:N0}人", _currentState.Population);
+            BudgetLabel.text = string.Format("財政 {0:N0}円", _currentState.Budget);
+            ApprovalRatingLabel.text = string.Format("支持率 {0}%", _currentState.ApprovalRating);
         }
     }
 }

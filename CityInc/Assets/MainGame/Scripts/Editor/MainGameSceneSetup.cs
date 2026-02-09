@@ -116,7 +116,7 @@ namespace Editor
 
             nextMonthButton.onClick.AddListener(presenter.OnNextMonthButtonClicked);
 
-            var initialState = new GameState(new GameDate(2024, 4));
+            var initialState = GameState.CreateInitial();
             presenter.Initialize(initialState);
 
             return presenter;

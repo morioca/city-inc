@@ -23,7 +23,7 @@ namespace Presentation
 
             var dateLabel = GameObject.Find("DateLabel")?.GetComponent<TMP_Text>();
             Assert.That(dateLabel, Is.Not.Null);
-            Assert.That(dateLabel.text, Is.EqualTo("2024年04月"));
+            Assert.That(dateLabel.text, Is.EqualTo("1年01月"));
 
             var nextMonthButton = GameObject.Find("NextMonthButton")?.GetComponent<Button>();
             Assert.That(nextMonthButton, Is.Not.Null);
@@ -41,12 +41,12 @@ namespace Presentation
             var dateLabel = GameObject.Find("DateLabel")?.GetComponent<TMP_Text>();
             var nextMonthButton = GameObject.Find("NextMonthButton")?.GetComponent<Button>();
 
-            Assert.That(dateLabel.text, Is.EqualTo("2024年04月"));
+            Assert.That(dateLabel.text, Is.EqualTo("1年01月"));
 
             nextMonthButton.onClick.Invoke();
             yield return null;
 
-            Assert.That(dateLabel.text, Is.EqualTo("2024年05月"));
+            Assert.That(dateLabel.text, Is.EqualTo("1年02月"));
         }
 
         [UnityTest]
@@ -58,18 +58,18 @@ namespace Presentation
             var dateLabel = GameObject.Find("DateLabel")?.GetComponent<TMP_Text>();
             var nextMonthButton = GameObject.Find("NextMonthButton")?.GetComponent<Button>();
 
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 11; i++)
             {
                 nextMonthButton.onClick.Invoke();
                 yield return null;
             }
 
-            Assert.That(dateLabel.text, Is.EqualTo("2024年12月"));
+            Assert.That(dateLabel.text, Is.EqualTo("1年12月"));
 
             nextMonthButton.onClick.Invoke();
             yield return null;
 
-            Assert.That(dateLabel.text, Is.EqualTo("2025年01月"));
+            Assert.That(dateLabel.text, Is.EqualTo("2年01月"));
         }
 
         [UnityTest]

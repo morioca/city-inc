@@ -22,9 +22,13 @@ namespace Presentation
             var canvas = CreateCanvas();
             CreateEventSystem();
             var safeAreaPanel = CreateSafeAreaPanel(canvas.transform);
+            var statusBarPanel = CreateStatusBarPanel(safeAreaPanel.transform);
+            var populationLabel = CreatePopulationLabel(statusBarPanel.transform);
+            var budgetLabel = CreateBudgetLabel(statusBarPanel.transform);
+            var approvalRatingLabel = CreateApprovalRatingLabel(statusBarPanel.transform);
             var dateLabel = CreateDateLabel(safeAreaPanel.transform);
             var nextMonthButton = CreateNextMonthButton(safeAreaPanel.transform);
-            CreateGameStatePresenter(safeAreaPanel.transform, dateLabel, nextMonthButton);
+            CreateGameStatePresenter(safeAreaPanel.transform, dateLabel, populationLabel, budgetLabel, approvalRatingLabel, nextMonthButton);
         }
 
         private GameObject CreateCanvas()
@@ -64,6 +68,68 @@ namespace Presentation
             panelObject.AddComponent<SafeAreaLayout>();
 
             return panelObject;
+        }
+
+        private GameObject CreateStatusBarPanel(Transform parent)
+        {
+            var panelObject = new GameObject("StatusBarPanel");
+            panelObject.transform.SetParent(parent, false);
+
+            var rectTransform = panelObject.AddComponent<RectTransform>();
+            rectTransform.anchorMin = new Vector2(0f, 1f);
+            rectTransform.anchorMax = new Vector2(1f, 1f);
+            rectTransform.pivot = new Vector2(0.5f, 1f);
+            rectTransform.anchoredPosition = Vector2.zero;
+            rectTransform.sizeDelta = new Vector2(0, 100);
+
+            var layoutGroup = panelObject.AddComponent<HorizontalLayoutGroup>();
+            layoutGroup.childAlignment = TextAnchor.MiddleCenter;
+            layoutGroup.spacing = 20;
+            layoutGroup.padding = new RectOffset(20, 20, 10, 10);
+
+            return panelObject;
+        }
+
+        private TMP_Text CreatePopulationLabel(Transform parent)
+        {
+            var labelObject = new GameObject("PopulationLabel");
+            labelObject.transform.SetParent(parent, false);
+
+            var textComponent = labelObject.AddComponent<TextMeshProUGUI>();
+            textComponent.text = "人口 50,000人";
+            textComponent.fontSize = 24;
+            textComponent.alignment = TextAlignmentOptions.Center;
+            textComponent.color = Color.white;
+
+            return textComponent;
+        }
+
+        private TMP_Text CreateBudgetLabel(Transform parent)
+        {
+            var labelObject = new GameObject("BudgetLabel");
+            labelObject.transform.SetParent(parent, false);
+
+            var textComponent = labelObject.AddComponent<TextMeshProUGUI>();
+            textComponent.text = "財政 100,000,000円";
+            textComponent.fontSize = 24;
+            textComponent.alignment = TextAlignmentOptions.Center;
+            textComponent.color = Color.white;
+
+            return textComponent;
+        }
+
+        private TMP_Text CreateApprovalRatingLabel(Transform parent)
+        {
+            var labelObject = new GameObject("ApprovalRatingLabel");
+            labelObject.transform.SetParent(parent, false);
+
+            var textComponent = labelObject.AddComponent<TextMeshProUGUI>();
+            textComponent.text = "支持率 60%";
+            textComponent.fontSize = 24;
+            textComponent.alignment = TextAlignmentOptions.Center;
+            textComponent.color = Color.white;
+
+            return textComponent;
         }
 
         private TMP_Text CreateDateLabel(Transform parent)
@@ -121,7 +187,7 @@ namespace Presentation
             return button;
         }
 
-        private void CreateGameStatePresenter(Transform parent, TMP_Text dateLabel, Button nextMonthButton)
+        private void CreateGameStatePresenter(Transform parent, TMP_Text dateLabel, TMP_Text populationLabel, TMP_Text budgetLabel, TMP_Text approvalRatingLabel, Button nextMonthButton)
         {
             var presenterObject = new GameObject("GameStatePresenter");
             presenterObject.transform.SetParent(parent, false);
@@ -132,13 +198,25 @@ namespace Presentation
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             dateField?.SetValue(presenter, dateLabel);
 
+            var populationField = typeof(GameStatePresenter).GetField("<PopulationLabel>k__BackingField",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            populationField?.SetValue(presenter, populationLabel);
+
+            var budgetField = typeof(GameStatePresenter).GetField("<BudgetLabel>k__BackingField",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            budgetField?.SetValue(presenter, budgetLabel);
+
+            var approvalRatingField = typeof(GameStatePresenter).GetField("<ApprovalRatingLabel>k__BackingField",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            approvalRatingField?.SetValue(presenter, approvalRatingLabel);
+
             var buttonField = typeof(GameStatePresenter).GetField("<NextMonthButton>k__BackingField",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             buttonField?.SetValue(presenter, nextMonthButton);
 
             nextMonthButton.onClick.AddListener(presenter.OnNextMonthButtonClicked);
 
-            var initialState = new GameState(new GameDate(2024, 4));
+            var initialState = GameState.CreateInitial();
             presenter.Initialize(initialState);
         }
     }

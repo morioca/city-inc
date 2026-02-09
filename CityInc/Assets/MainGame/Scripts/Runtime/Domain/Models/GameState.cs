@@ -55,7 +55,12 @@ namespace Domain.Models
         /// <returns>A new GameState with initial values</returns>
         public static GameState CreateInitial()
         {
-            throw new System.NotImplementedException();
+            return new GameState(
+                new GameDate(1, 1),
+                50000,
+                100000000L,
+                60
+            );
         }
     }
 }

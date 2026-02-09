@@ -15,7 +15,12 @@ namespace Domain.Systems
         public GameState ProgressToNextMonth(GameState currentState)
         {
             var nextDate = currentState.CurrentDate.AddMonths(1);
-            return new GameState(nextDate);
+            return new GameState(
+                nextDate,
+                currentState.Population,
+                currentState.Budget,
+                currentState.ApprovalRating
+            );
         }
     }
 }

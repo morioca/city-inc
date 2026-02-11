@@ -24,4 +24,4 @@ Never skip any step. Never jump straight into coding.
 - `docs/02-overview.md` — Overview (world setting, rules, success metrics)
 - `docs/03-gdd.md` — Game Design Document (core loop, systems, UI/UX, scenarios)
 - `docs/04-tdd.md` — Technical Design Document (tech stack, architecture, roadmap)
-- `docs/coffee-inc-2-analysis/` — Reference game analysis (Coffee Inc 2)
+- `references/coffee-inc-2-analysis/` — Reference game analysis (Coffee Inc 2)

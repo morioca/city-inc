@@ -6,10 +6,12 @@
 
 1. `/create-doc` — Create a specification document from the conversation
 2. `/create-test-cases` — Derive test cases from the specification
-3. `/implement-code` — Implement code using TDD
-4. `/review-test-cases` — Remove or consolidate low-value tests after implementation
+3. `/split-spec` — Split spec into domain and presentation (skip if spec covers only one layer)
+4. `/implement-code` — Implement code using TDD (domain spec first, then presentation spec)
+5. `/review-test-cases` — Remove or consolidate low-value tests after implementation
 
 Never skip any step. Never jump straight into coding.
+Never commit to Git unless the user explicitly asks you to.
 
 ## Project Context
 

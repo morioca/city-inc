@@ -1,18 +1,10 @@
-# Budget Allocation System — Phase 1
+# Budget Allocation System — Phase 1 (Presentation)
+
+> **Dependency:** This spec depends on the domain layer defined in `2026-02-11-budget-allocation-system-domain.md`. The domain spec must be implemented first, as the presentation layer relies on `BudgetAllocation`, `GameState.CurrentAllocation`, and `BudgetValidator`.
 
 ## Requirements
 
-The main game screen currently displays city status (population, budget, approval rating) and allows advancing turns via "Next Month" button. However, the player has no way to make decisions or affect the city's trajectory. Per GDD §3-2, budget allocation is the primary decision-making mechanism where the mayor distributes limited financial resources across six policy categories to influence city development.
-
-Without a budget allocation system:
-- The core gameplay loop (Observe → Decide → Execute → Review) remains incomplete
-- Clicking "Next Month" has no strategic meaning
-- The player cannot express their policy priorities or playstyle
-- City metrics remain static and unchanging
-
-This feature implements the decision-making layer that transforms the current passive observer experience into active mayoral governance.
-
-## Specifications
+This spec covers the **presentation layer** (UI, presenters, and integration) for the budget allocation feature. It implements the screens and interaction logic that allow the player to view and modify budget allocations through the game UI.
 
 ### Functional Requirements
 
@@ -21,16 +13,6 @@ This feature implements the decision-making layer that transforms the current pa
 - Tapping the Budget button opens a full-screen budget allocation modal
 - The modal displays the budget allocation UI
 - A "Close" or "Back" button returns to the main game screen
-
-**Six Policy Categories**
-
-Per GDD §3-2, the player allocates budget across these categories:
-1. Welfare & Healthcare (福祉・医療)
-2. Education & Childcare (教育・子育て)
-3. Industry Development (産業振興)
-4. Infrastructure (インフラ整備)
-5. Disaster Prevention & Safety (防災・安全)
-6. Tourism & Culture (観光・文化)
 
 **Budget Display**
 - Show total available budget at the top (e.g., "Total Budget: ¥100,000,000")
@@ -45,11 +27,6 @@ Per GDD §3-2, the player allocates budget across these categories:
 - Player can allocate any amount from ¥0 to total budget per category
 - Real-time validation: total allocation across all categories must not exceed total budget
 - Display visual feedback when allocation exceeds budget (e.g., red text for "Remaining")
-
-**Allocation Constraints (Simplified Phase 1)**
-- No minimum required allocation per category (all categories can be ¥0)
-- Total allocation must equal total budget (100% utilization required)
-- Budget must be non-negative integer values (no fractional yen)
 
 **Confirm Allocation**
 - "Confirm" button at the bottom of the screen
@@ -79,91 +56,6 @@ These limitations will be addressed in subsequent phases.
 - Numeric values display thousand separators (e.g., "100,000,000" not "100000000")
 
 ## Design
-
-### Model Layer (Domain.Models)
-
-**New: BudgetAllocation**
-
-Immutable value object representing the allocation across all six categories:
-
-```csharp
-public class BudgetAllocation
-{
-    public long WelfareHealthcare { get; }
-    public long EducationChildcare { get; }
-    public long IndustryDevelopment { get; }
-    public long Infrastructure { get; }
-    public long DisasterPrevention { get; }
-    public long TourismCulture { get; }
-
-    public BudgetAllocation(
-        long welfareHealthcare,
-        long educationChildcare,
-        long industryDevelopment,
-        long infrastructure,
-        long disasterPrevention,
-        long tourismCulture)
-    {
-        WelfareHealthcare = welfareHealthcare;
-        EducationChildcare = educationChildcare;
-        IndustryDevelopment = industryDevelopment;
-        Infrastructure = infrastructure;
-        DisasterPrevention = disasterPrevention;
-        TourismCulture = tourismCulture;
-    }
-
-    public long TotalAllocated =>
-        WelfareHealthcare + EducationChildcare + IndustryDevelopment +
-        Infrastructure + DisasterPrevention + TourismCulture;
-
-    public static BudgetAllocation EqualDistribution(long totalBudget)
-    {
-        long perCategory = totalBudget / 6;
-        return new BudgetAllocation(
-            perCategory, perCategory, perCategory,
-            perCategory, perCategory, perCategory);
-    }
-}
-```
-
-**Extend: GameState**
-
-Add `CurrentAllocation` property to track the active budget allocation:
-
-```csharp
-public class GameState
-{
-    public GameDate CurrentDate { get; }
-    public int Population { get; }
-    public long Budget { get; }
-    public int ApprovalRating { get; }
-    public BudgetAllocation CurrentAllocation { get; }
-
-    // Constructor updated to include CurrentAllocation
-    // CreateInitial() factory method updated to include default equal distribution
-}
-```
-
-### Business Logic Layer (Domain.Systems)
-
-**New: BudgetValidator**
-
-Pure C# class for validation logic:
-
-```csharp
-public class BudgetValidator
-{
-    public bool IsValid(BudgetAllocation allocation, long totalBudget)
-    {
-        return allocation.TotalAllocated == totalBudget;
-    }
-
-    public long GetRemaining(BudgetAllocation allocation, long totalBudget)
-    {
-        return totalBudget - allocation.TotalAllocated;
-    }
-}
-```
 
 ### Presentation Layer (Presentation.Budget)
 
@@ -278,6 +170,16 @@ Add instantiation of Budget button and BudgetScreen modal:
 └─────────────────────────────────┘
 ```
 
+### Domain Dependencies
+
+This presentation layer depends on the following domain types (defined in the domain spec):
+
+- `BudgetAllocation` — Immutable value object with six category properties and `TotalAllocated`
+- `BudgetAllocation.EqualDistribution(long)` — Factory method for default allocation
+- `GameState.CurrentAllocation` — Property providing the current allocation
+- `BudgetValidator.IsValid(BudgetAllocation, long)` — Validation logic
+- `BudgetValidator.GetRemaining(BudgetAllocation, long)` — Remaining budget calculation
+
 ### Integration Points
 
 **GameState Evolution**
@@ -293,119 +195,19 @@ Add instantiation of Budget button and BudgetScreen modal:
 
 New files:
 ```
-Assets/Scripts/Domain/Models/BudgetAllocation.cs
-Assets/Scripts/Domain/Systems/BudgetValidator.cs
 Assets/Scripts/Presentation/Budget/BudgetAllocationPresenter.cs
 Assets/Scripts/Presentation/Budget/BudgetScreen.prefab
 
-Assets/Tests/EditMode/Domain/Models/BudgetAllocationTest.cs
-Assets/Tests/EditMode/Domain/Systems/BudgetValidatorTest.cs
 Assets/Tests/PlayMode/Presentation/Budget/BudgetAllocationPresenterTest.cs
 Assets/Tests/PlayMode/Presentation/Budget/BudgetScreenIntegrationTest.cs
 ```
 
 Modified files:
 ```
-Assets/Scripts/Domain/Models/GameState.cs
 Assets/Scripts/Presentation/MainGameSceneInitializer.cs
 ```
 
 ## Test Cases
-
-### Edit Mode Tests — Domain.Models.BudgetAllocation
-
-#### BudgetAllocation_Constructor_WhenCalledWithValidValues_SetsAllProperties
-- Verify all six category properties are set correctly with provided constructor arguments
-- Verify TotalAllocated returns sum of all six categories
-
-#### BudgetAllocation_TotalAllocated_WhenCategoriesAreZero_ReturnsZero
-- Create allocation with all categories set to 0
-- Verify TotalAllocated returns 0
-
-#### BudgetAllocation_TotalAllocated_WhenCategoriesHaveValues_ReturnsCorrectSum
-- Create allocation with mixed values (e.g., 10M, 20M, 15M, 25M, 5M, 25M)
-- Verify TotalAllocated returns 100M
-
-#### BudgetAllocation_TotalAllocated_WhenSingleCategoryHasAllBudget_ReturnsTotalBudget
-- Create allocation with one category = 100M, others = 0
-- Verify TotalAllocated returns 100M
-
-#### BudgetAllocation_EqualDistribution_WhenTotalBudgetIs100Million_ReturnsEqualAllocation
-- Call EqualDistribution(100000000L)
-- Verify all six categories = 16666666
-- Verify TotalAllocated = 99999996 (due to integer division)
-
-#### BudgetAllocation_EqualDistribution_WhenTotalBudgetIs0_ReturnsZeroAllocation
-- Call EqualDistribution(0L)
-- Verify all six categories = 0
-
-#### BudgetAllocation_EqualDistribution_WhenTotalBudgetIs1000_ReturnsEqualDistribution
-- Call EqualDistribution(1000L)
-- Verify all six categories = 166
-- Verify TotalAllocated = 996
-
-#### BudgetAllocation_Constructor_WhenCalledWithNegativeValues_AcceptsNegativeValues
-- Create allocation with negative values (edge case test, system should handle at validation layer)
-- Verify properties store the negative values as provided
-- Note: validation is BudgetValidator's responsibility, not constructor's
-
-### Edit Mode Tests — Domain.Models.GameState
-
-#### GameState_Constructor_WhenCalledWithBudgetAllocation_SetsBudgetAllocationProperty
-- Create GameState with a specific BudgetAllocation
-- Verify CurrentAllocation property returns the provided allocation
-
-#### GameState_CreateInitial_WhenCalled_SetsEqualDistributionBudgetAllocation
-- Call GameState.CreateInitial()
-- Verify CurrentAllocation is equal distribution across six categories
-- Verify CurrentAllocation.TotalAllocated ≈ 100M (within rounding error)
-
-#### GameState_CreateInitial_WhenCalled_BudgetAllocationMatchesTotalBudget
-- Call GameState.CreateInitial()
-- Verify Budget property = 100000000L
-- Verify CurrentAllocation uses this budget for equal distribution
-
-### Edit Mode Tests — Domain.Systems.BudgetValidator
-
-#### BudgetValidator_IsValid_WhenTotalAllocatedEqualsTotalBudget_ReturnsTrue
-- Create allocation totaling exactly 100M
-- Call IsValid with totalBudget = 100M
-- Verify returns true
-
-#### BudgetValidator_IsValid_WhenTotalAllocatedExceedsTotalBudget_ReturnsFalse
-- Create allocation totaling 110M
-- Call IsValid with totalBudget = 100M
-- Verify returns false
-
-#### BudgetValidator_IsValid_WhenTotalAllocatedLessThanTotalBudget_ReturnsFalse
-- Create allocation totaling 90M
-- Call IsValid with totalBudget = 100M
-- Verify returns false
-
-#### BudgetValidator_IsValid_WhenTotalAllocatedIsZeroAndBudgetIsZero_ReturnsTrue
-- Create allocation totaling 0
-- Call IsValid with totalBudget = 0
-- Verify returns true
-
-#### BudgetValidator_GetRemaining_WhenTotalAllocatedEqualsTotalBudget_ReturnsZero
-- Create allocation totaling 100M
-- Call GetRemaining with totalBudget = 100M
-- Verify returns 0
-
-#### BudgetValidator_GetRemaining_WhenTotalAllocatedLessThanBudget_ReturnsPositiveValue
-- Create allocation totaling 80M
-- Call GetRemaining with totalBudget = 100M
-- Verify returns 20M
-
-#### BudgetValidator_GetRemaining_WhenTotalAllocatedExceedsBudget_ReturnsNegativeValue
-- Create allocation totaling 120M
-- Call GetRemaining with totalBudget = 100M
-- Verify returns -20M
-
-#### BudgetValidator_GetRemaining_WhenAllocationIsZero_ReturnsTotalBudget
-- Create allocation totaling 0
-- Call GetRemaining with totalBudget = 100M
-- Verify returns 100M
 
 ### Play Mode Tests — Presentation.Budget.BudgetAllocationPresenter
 

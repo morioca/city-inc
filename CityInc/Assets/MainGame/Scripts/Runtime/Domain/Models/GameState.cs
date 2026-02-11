@@ -26,12 +26,18 @@ namespace Domain.Models
         public int ApprovalRating { get; }
 
         /// <summary>
+        /// The current budget allocation across all policy categories.
+        /// </summary>
+        public BudgetAllocation CurrentAllocation { get; }
+
+        /// <summary>
         /// Create a new GameState with the specified date.
         /// </summary>
         /// <param name="currentDate">The current game date</param>
         public GameState(GameDate currentDate)
         {
             CurrentDate = currentDate;
+            CurrentAllocation = BudgetAllocation.EqualDistribution(0);
         }
 
         /// <summary>
@@ -41,12 +47,14 @@ namespace Domain.Models
         /// <param name="population">The city's population</param>
         /// <param name="budget">The city's budget in yen</param>
         /// <param name="approvalRating">The mayor's approval rating (0-100)</param>
-        public GameState(GameDate currentDate, int population, long budget, int approvalRating)
+        /// <param name="currentAllocation">The current budget allocation</param>
+        public GameState(GameDate currentDate, int population, long budget, int approvalRating, BudgetAllocation currentAllocation)
         {
             CurrentDate = currentDate;
             Population = population;
             Budget = budget;
             ApprovalRating = approvalRating;
+            CurrentAllocation = currentAllocation;
         }
 
         /// <summary>
@@ -59,7 +67,8 @@ namespace Domain.Models
                 new GameDate(1, 1),
                 50000,
                 100000000L,
-                60
+                60,
+                BudgetAllocation.EqualDistribution(100000000L)
             );
         }
     }

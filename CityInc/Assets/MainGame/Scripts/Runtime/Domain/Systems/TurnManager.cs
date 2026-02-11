@@ -19,7 +19,8 @@ namespace Domain.Systems
                 nextDate,
                 currentState.Population,
                 currentState.Budget,
-                currentState.ApprovalRating
+                currentState.ApprovalRating,
+                currentState.CurrentAllocation
             );
         }
     }

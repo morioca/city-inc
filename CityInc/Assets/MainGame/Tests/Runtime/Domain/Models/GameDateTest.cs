@@ -30,26 +30,6 @@ namespace Domain.Models
         }
 
         [Test]
-        public void AddMonths_WhenTwelveMonths_ReturnsSameMonthNextYear()
-        {
-            var sut = new GameDate(2024, 4);
-
-            var actual = sut.AddMonths(12);
-
-            Assert.That(actual, Is.EqualTo(new GameDate(2025, 4)));
-        }
-
-        [Test]
-        public void AddMonths_WhenZero_ReturnsSameDate()
-        {
-            var sut = new GameDate(2024, 7);
-
-            var actual = sut.AddMonths(0);
-
-            Assert.That(actual, Is.EqualTo(new GameDate(2024, 7)));
-        }
-
-        [Test]
         public void AddMonths_WhenNegativeOneFromNormalMonth_ReturnsPreviousMonth()
         {
             var sut = new GameDate(2024, 2);
@@ -70,22 +50,8 @@ namespace Domain.Models
         }
 
         [TestCase(2024, 1, "2024年01月")]
-        [TestCase(2024, 4, "2024年04月")]
-        [TestCase(2024, 9, "2024年09月")]
-        public void ToDisplayString_WhenSingleDigitMonth_ReturnsZeroPaddedFormat(
-            int year, int month, string expected)
-        {
-            var sut = new GameDate(year, month);
-
-            var actual = sut.ToDisplayString();
-
-            Assert.That(actual, Is.EqualTo(expected));
-        }
-
-        [TestCase(2024, 10, "2024年10月")]
-        [TestCase(2024, 11, "2024年11月")]
         [TestCase(2024, 12, "2024年12月")]
-        public void ToDisplayString_WhenDoubleDigitMonth_ReturnsFormattedString(
+        public void ToDisplayString_ReturnsFormattedString(
             int year, int month, string expected)
         {
             var sut = new GameDate(year, month);

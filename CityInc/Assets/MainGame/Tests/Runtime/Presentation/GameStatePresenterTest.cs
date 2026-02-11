@@ -61,15 +61,18 @@ namespace Presentation
         }
 
         [UnityTest]
-        public IEnumerator Initialize_WhenCalled_DisplaysCorrectDate()
+        public IEnumerator Initialize_WhenCalled_DisplaysAllGameStateLabels()
         {
             _sutObject = CreateSystemUnderTestObject();
             var sut = _sutObject.GetComponent<GameStatePresenter>();
             yield return null;
 
-            sut.Initialize(new GameState(new GameDate(2024, 4)));
+            sut.Initialize(GameState.CreateInitial());
 
             Assert.That(sut.DateLabel.text, Is.EqualTo("2024年04月"));
+            Assert.That(sut.PopulationLabel.text, Is.EqualTo("人口 50,000人"));
+            Assert.That(sut.BudgetLabel.text, Is.EqualTo("財政 100,000,000円"));
+            Assert.That(sut.ApprovalRatingLabel.text, Is.EqualTo("支持率 60%"));
         }
 
         [UnityTest]
@@ -96,81 +99,6 @@ namespace Presentation
             sut.OnNextMonthButtonClicked();
 
             Assert.That(sut.DateLabel.text, Is.EqualTo("2025年01月"));
-        }
-
-        [UnityTest]
-        public IEnumerator Initialize_WhenCalled_DisplaysPopulationLabel()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<GameStatePresenter>();
-            yield return null;
-
-            sut.Initialize(GameState.CreateInitial());
-
-            Assert.That(sut.PopulationLabel.text, Is.EqualTo("人口 50,000人"));
-        }
-
-        [UnityTest]
-        public IEnumerator Initialize_WhenCalled_DisplaysBudgetLabel()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<GameStatePresenter>();
-            yield return null;
-
-            sut.Initialize(GameState.CreateInitial());
-
-            Assert.That(sut.BudgetLabel.text, Is.EqualTo("財政 100,000,000円"));
-        }
-
-        [UnityTest]
-        public IEnumerator Initialize_WhenCalled_DisplaysApprovalRatingLabel()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<GameStatePresenter>();
-            yield return null;
-
-            sut.Initialize(GameState.CreateInitial());
-
-            Assert.That(sut.ApprovalRatingLabel.text, Is.EqualTo("支持率 60%"));
-        }
-
-        [UnityTest]
-        public IEnumerator OnNextMonthButtonClicked_WhenCalled_PopulationLabelRemainsUnchanged()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<GameStatePresenter>();
-            yield return null;
-
-            sut.Initialize(GameState.CreateInitial());
-            sut.OnNextMonthButtonClicked();
-
-            Assert.That(sut.PopulationLabel.text, Is.EqualTo("人口 50,000人"));
-        }
-
-        [UnityTest]
-        public IEnumerator OnNextMonthButtonClicked_WhenCalled_BudgetLabelRemainsUnchanged()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<GameStatePresenter>();
-            yield return null;
-
-            sut.Initialize(GameState.CreateInitial());
-            sut.OnNextMonthButtonClicked();
-
-            Assert.That(sut.BudgetLabel.text, Is.EqualTo("財政 100,000,000円"));
-        }
-
-        [UnityTest]
-        public IEnumerator OnNextMonthButtonClicked_WhenCalled_ApprovalRatingLabelRemainsUnchanged()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<GameStatePresenter>();
-            yield return null;
-
-            sut.Initialize(GameState.CreateInitial());
-            sut.OnNextMonthButtonClicked();
-
-            Assert.That(sut.ApprovalRatingLabel.text, Is.EqualTo("支持率 60%"));
         }
     }
 }

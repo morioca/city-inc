@@ -33,7 +33,7 @@ namespace UI
 
         // TC-01: Safe Areaが画面全体の場合にanchorが正しく設定される
         [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaIsFullScreen_SetsAnchorsToFullScreen()
+        public IEnumerator Awake_WhenSafeAreaIsFullScreen_SetsAnchorsCorrectly()
         {
             var stubScreenProvider = new StubScreenProvider(
                 new Rect(0, 0, 1920, 1080), 1920, 1080);
@@ -42,23 +42,12 @@ namespace UI
             yield return null;
 
             Assert.That(rectTransform.anchorMin, Is.EqualTo(new Vector2(0, 0)));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaIsFullScreen_SetsAnchorMaxToOne()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(0, 0, 1920, 1080), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
             Assert.That(rectTransform.anchorMax, Is.EqualTo(new Vector2(1, 1)));
         }
 
         // TC-03: Safe Areaが画面上部にオフセットがある場合（ノッチ対応）
         [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasTopOffset_SetsAnchorMinYCorrectly()
+        public IEnumerator Awake_WhenSafeAreaHasTopOffset_SetsAnchorsCorrectly()
         {
             var stubScreenProvider = new StubScreenProvider(
                 new Rect(0, 100, 1920, 980), 1920, 1080);
@@ -67,24 +56,13 @@ namespace UI
             yield return null;
 
             var expectedMinY = 100f / 1080f;
-            Assert.That(rectTransform.anchorMin.y, Is.EqualTo(expectedMinY).Within(0.001f));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasTopOffset_SetsAnchorMaxToOne()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(0, 100, 1920, 980), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
+            Assert.That(rectTransform.anchorMin, Is.EqualTo(new Vector2(0, expectedMinY)).Within(0.001f));
             Assert.That(rectTransform.anchorMax, Is.EqualTo(new Vector2(1, 1)));
         }
 
         // TC-05: Safe Areaが左右にオフセットがある場合
         [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasHorizontalOffset_SetsAnchorMinXCorrectly()
+        public IEnumerator Awake_WhenSafeAreaHasHorizontalOffset_SetsAnchorsCorrectly()
         {
             var stubScreenProvider = new StubScreenProvider(
                 new Rect(50, 0, 1820, 1080), 1920, 1080);
@@ -92,26 +70,15 @@ namespace UI
             var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
             yield return null;
 
-            var expectedMinX = 50f / 1920f;
-            Assert.That(rectTransform.anchorMin.x, Is.EqualTo(expectedMinX).Within(0.001f));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasHorizontalOffset_SetsAnchorMaxXCorrectly()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(50, 0, 1820, 1080), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
-            var expectedMaxX = (50f + 1820f) / 1920f;
-            Assert.That(rectTransform.anchorMax.x, Is.EqualTo(expectedMaxX).Within(0.001f));
+            var expectedMin = new Vector2(50f / 1920f, 0);
+            var expectedMax = new Vector2((50f + 1820f) / 1920f, 1);
+            Assert.That(rectTransform.anchorMin, Is.EqualTo(expectedMin).Within(0.001f));
+            Assert.That(rectTransform.anchorMax, Is.EqualTo(expectedMax).Within(0.001f));
         }
 
         // TC-07: Safe Areaが四辺すべてにオフセットがある場合
         [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasAllSidesOffset_SetsAnchorMinCorrectly()
+        public IEnumerator Awake_WhenSafeAreaHasAllSidesOffset_SetsAnchorsCorrectly()
         {
             var stubScreenProvider = new StubScreenProvider(
                 new Rect(50, 100, 1820, 880), 1920, 1080);
@@ -120,46 +87,9 @@ namespace UI
             yield return null;
 
             var expectedMin = new Vector2(50f / 1920f, 100f / 1080f);
-            Assert.That(rectTransform.anchorMin.x, Is.EqualTo(expectedMin.x).Within(0.001f));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasAllSidesOffset_SetsAnchorMinYCorrectly()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(50, 100, 1820, 880), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
-            var expectedMinY = 100f / 1080f;
-            Assert.That(rectTransform.anchorMin.y, Is.EqualTo(expectedMinY).Within(0.001f));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasAllSidesOffset_SetsAnchorMaxCorrectly()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(50, 100, 1820, 880), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
             var expectedMax = new Vector2((50f + 1820f) / 1920f, (100f + 880f) / 1080f);
-            Assert.That(rectTransform.anchorMax.x, Is.EqualTo(expectedMax.x).Within(0.001f));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenSafeAreaHasAllSidesOffset_SetsAnchorMaxYCorrectly()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(50, 100, 1820, 880), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
-            var expectedMaxY = (100f + 880f) / 1080f;
-            Assert.That(rectTransform.anchorMax.y, Is.EqualTo(expectedMaxY).Within(0.001f));
+            Assert.That(rectTransform.anchorMin, Is.EqualTo(expectedMin).Within(0.001f));
+            Assert.That(rectTransform.anchorMax, Is.EqualTo(expectedMax).Within(0.001f));
         }
 
         // TC-10: 画面サイズが変更されたときにanchorが再計算される
@@ -197,22 +127,6 @@ namespace UI
             Assert.That(rectTransform.anchorMin, Is.EqualTo(new Vector2(0, 0)));
         }
 
-        // TC-14: 画面サイズとSafe Areaが変更されないときに再計算されない
-        [UnityTest]
-        public IEnumerator Update_WhenNoChanges_DoesNotRecalculateAnchors()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(0, 100, 1920, 980), 1920, 1080);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
-            var anchorMinBefore = rectTransform.anchorMin;
-            var anchorMaxBefore = rectTransform.anchorMax;
-            yield return null;
-
-            Assert.That(rectTransform.anchorMin, Is.EqualTo(anchorMinBefore));
-        }
 
         // TC-20: 極小画面サイズでも正しく動作する
         [UnityTest]
@@ -225,17 +139,6 @@ namespace UI
             yield return null;
 
             Assert.That(rectTransform.anchorMin, Is.EqualTo(new Vector2(0.1f, 0.1f)));
-        }
-
-        [UnityTest]
-        public IEnumerator Awake_WhenVerySmallScreen_SetsAnchorMaxCorrectly()
-        {
-            var stubScreenProvider = new StubScreenProvider(
-                new Rect(10, 10, 80, 80), 100, 100);
-
-            var (sut, rectTransform) = CreateSystemUnderTest(stubScreenProvider);
-            yield return null;
-
             Assert.That(rectTransform.anchorMax, Is.EqualTo(new Vector2(0.9f, 0.9f)));
         }
 

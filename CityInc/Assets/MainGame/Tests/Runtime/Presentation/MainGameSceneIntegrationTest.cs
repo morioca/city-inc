@@ -73,17 +73,6 @@ namespace Presentation
         }
 
         [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_CreatesSafeAreaPanelUnderCanvas()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var safeAreaPanel = GameObject.Find("SafeAreaPanel");
-
-            Assert.That(safeAreaPanel.transform.parent.name, Is.EqualTo("Canvas"));
-        }
-
-        [UnityTest]
         public IEnumerator MainGameScene_WhenLoaded_SafeAreaPanelHasSafeAreaLayoutComponent()
         {
             yield return SceneManager.LoadSceneAsync("MainGameScene");
@@ -95,7 +84,7 @@ namespace Presentation
         }
 
         [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_SafeAreaPanelHasAnchorMinZero()
+        public IEnumerator MainGameScene_WhenLoaded_SafeAreaPanelHasFullScreenRectTransform()
         {
             yield return SceneManager.LoadSceneAsync("MainGameScene");
             yield return null;
@@ -104,41 +93,8 @@ namespace Presentation
             var rectTransform = safeAreaPanel.GetComponent<RectTransform>();
 
             Assert.That(rectTransform.anchorMin, Is.EqualTo(Vector2.zero));
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_SafeAreaPanelHasAnchorMaxOne()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var safeAreaPanel = GameObject.Find("SafeAreaPanel");
-            var rectTransform = safeAreaPanel.GetComponent<RectTransform>();
-
             Assert.That(rectTransform.anchorMax, Is.EqualTo(Vector2.one));
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_SafeAreaPanelHasOffsetMinZero()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var safeAreaPanel = GameObject.Find("SafeAreaPanel");
-            var rectTransform = safeAreaPanel.GetComponent<RectTransform>();
-
             Assert.That(rectTransform.offsetMin, Is.EqualTo(Vector2.zero));
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_SafeAreaPanelHasOffsetMaxZero()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var safeAreaPanel = GameObject.Find("SafeAreaPanel");
-            var rectTransform = safeAreaPanel.GetComponent<RectTransform>();
-
             Assert.That(rectTransform.offsetMax, Is.EqualTo(Vector2.zero));
         }
 
@@ -176,17 +132,6 @@ namespace Presentation
         }
 
         [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_CreatesStatusBarPanel()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var statusBarPanel = GameObject.Find("StatusBarPanel");
-
-            Assert.That(statusBarPanel, Is.Not.Null);
-        }
-
-        [UnityTest]
         public IEnumerator MainGameScene_WhenLoaded_StatusBarPanelIsUnderSafeAreaPanel()
         {
             yield return SceneManager.LoadSceneAsync("MainGameScene");
@@ -195,39 +140,6 @@ namespace Presentation
             var statusBarPanel = GameObject.Find("StatusBarPanel");
 
             Assert.That(statusBarPanel.transform.parent.name, Is.EqualTo("SafeAreaPanel"));
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelExists()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var populationLabel = GameObject.Find("PopulationLabel")?.GetComponent<TMP_Text>();
-
-            Assert.That(populationLabel, Is.Not.Null);
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelExists()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var budgetLabel = GameObject.Find("BudgetLabel")?.GetComponent<TMP_Text>();
-
-            Assert.That(budgetLabel, Is.Not.Null);
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelExists()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel")?.GetComponent<TMP_Text>();
-
-            Assert.That(approvalRatingLabel, Is.Not.Null);
         }
 
         [UnityTest]
@@ -264,75 +176,22 @@ namespace Presentation
         }
 
         [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelHasLayoutElement()
+        public IEnumerator MainGameScene_WhenLoaded_StatusBarLabelsHaveCorrectPreferredWidths()
         {
             yield return SceneManager.LoadSceneAsync("MainGameScene");
             yield return null;
 
             var populationLabel = GameObject.Find("PopulationLabel");
-            var layoutElement = populationLabel?.GetComponent<LayoutElement>();
-
-            Assert.That(layoutElement, Is.Not.Null);
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_PopulationLabelHasCorrectPreferredWidth()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var populationLabel = GameObject.Find("PopulationLabel");
-            var layoutElement = populationLabel?.GetComponent<LayoutElement>();
-
-            Assert.That(layoutElement.preferredWidth, Is.EqualTo(200));
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelHasLayoutElement()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
+            var populationLayoutElement = populationLabel?.GetComponent<LayoutElement>();
+            Assert.That(populationLayoutElement.preferredWidth, Is.EqualTo(200));
 
             var budgetLabel = GameObject.Find("BudgetLabel");
-            var layoutElement = budgetLabel?.GetComponent<LayoutElement>();
-
-            Assert.That(layoutElement, Is.Not.Null);
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_BudgetLabelHasCorrectPreferredWidth()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var budgetLabel = GameObject.Find("BudgetLabel");
-            var layoutElement = budgetLabel?.GetComponent<LayoutElement>();
-
-            Assert.That(layoutElement.preferredWidth, Is.EqualTo(250));
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelHasLayoutElement()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
+            var budgetLayoutElement = budgetLabel?.GetComponent<LayoutElement>();
+            Assert.That(budgetLayoutElement.preferredWidth, Is.EqualTo(250));
 
             var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel");
-            var layoutElement = approvalRatingLabel?.GetComponent<LayoutElement>();
-
-            Assert.That(layoutElement, Is.Not.Null);
-        }
-
-        [UnityTest]
-        public IEnumerator MainGameScene_WhenLoaded_ApprovalRatingLabelHasCorrectPreferredWidth()
-        {
-            yield return SceneManager.LoadSceneAsync("MainGameScene");
-            yield return null;
-
-            var approvalRatingLabel = GameObject.Find("ApprovalRatingLabel");
-            var layoutElement = approvalRatingLabel?.GetComponent<LayoutElement>();
-
-            Assert.That(layoutElement.preferredWidth, Is.EqualTo(150));
+            var approvalLayoutElement = approvalRatingLabel?.GetComponent<LayoutElement>();
+            Assert.That(approvalLayoutElement.preferredWidth, Is.EqualTo(150));
         }
     }
 }

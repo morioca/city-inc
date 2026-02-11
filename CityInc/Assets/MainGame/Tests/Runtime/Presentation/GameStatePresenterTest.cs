@@ -69,7 +69,7 @@ namespace Presentation
 
             sut.Initialize(GameState.CreateInitial());
 
-            Assert.That(sut.DateLabel.text, Is.EqualTo("2024年04月"));
+            Assert.That(sut.DateLabel.text, Is.EqualTo("1年01月"));
             Assert.That(sut.PopulationLabel.text, Is.EqualTo("人口 50,000人"));
             Assert.That(sut.BudgetLabel.text, Is.EqualTo("財政 100,000,000円"));
             Assert.That(sut.ApprovalRatingLabel.text, Is.EqualTo("支持率 60%"));

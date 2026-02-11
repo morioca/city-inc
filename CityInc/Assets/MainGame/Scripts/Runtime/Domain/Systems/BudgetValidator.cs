@@ -15,7 +15,7 @@ namespace Domain.Systems
         /// <returns>True if allocation equals total budget, false otherwise</returns>
         public bool IsValid(BudgetAllocation allocation, long totalBudget)
         {
-            throw new System.NotImplementedException();
+            return allocation.TotalAllocated == totalBudget;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Domain.Systems
         /// <returns>Remaining budget (positive if under-allocated, negative if over-allocated)</returns>
         public long GetRemaining(BudgetAllocation allocation, long totalBudget)
         {
-            throw new System.NotImplementedException();
+            return totalBudget - allocation.TotalAllocated;
         }
     }
 }

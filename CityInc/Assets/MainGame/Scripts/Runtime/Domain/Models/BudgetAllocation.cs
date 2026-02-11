@@ -38,13 +38,9 @@ namespace Domain.Models
         /// <summary>
         /// Gets the total amount allocated across all categories.
         /// </summary>
-        public long TotalAllocated
-        {
-            get
-            {
-                throw new System.NotImplementedException();
-            }
-        }
+        public long TotalAllocated =>
+            WelfareHealthcare + EducationChildcare + IndustryDevelopment +
+            Infrastructure + DisasterPrevention + TourismCulture;
 
         /// <summary>
         /// Create a new BudgetAllocation with the specified values for all categories.
@@ -63,7 +59,12 @@ namespace Domain.Models
             long disasterPrevention,
             long tourismCulture)
         {
-            throw new System.NotImplementedException();
+            WelfareHealthcare = welfareHealthcare;
+            EducationChildcare = educationChildcare;
+            IndustryDevelopment = industryDevelopment;
+            Infrastructure = infrastructure;
+            DisasterPrevention = disasterPrevention;
+            TourismCulture = tourismCulture;
         }
 
         /// <summary>
@@ -73,7 +74,14 @@ namespace Domain.Models
         /// <returns>A new BudgetAllocation with equal distribution</returns>
         public static BudgetAllocation EqualDistribution(long totalBudget)
         {
-            throw new System.NotImplementedException();
+            long perCategory = totalBudget / 6;
+            return new BudgetAllocation(
+                perCategory,
+                perCategory,
+                perCategory,
+                perCategory,
+                perCategory,
+                perCategory);
         }
     }
 }

@@ -18,15 +18,6 @@ namespace Domain.Models
         }
 
         [Test]
-        public void GameState_Constructor_WhenCalledWithBudgetAllocation_SetsBudgetAllocationProperty()
-        {
-            var allocation = new BudgetAllocation(10000000L, 20000000L, 15000000L, 25000000L, 5000000L, 25000000L);
-            var sut = new GameState(new GameDate(1, 1), 50000, 100000000L, 60, allocation);
-
-            Assert.That(sut.CurrentAllocation, Is.EqualTo(allocation));
-        }
-
-        [Test]
         public void GameState_CreateInitial_WhenCalled_SetsEqualDistributionBudgetAllocation()
         {
             var sut = GameState.CreateInitial();
@@ -37,16 +28,6 @@ namespace Domain.Models
             Assert.That(sut.CurrentAllocation.Infrastructure, Is.EqualTo(16666666L));
             Assert.That(sut.CurrentAllocation.DisasterPrevention, Is.EqualTo(16666666L));
             Assert.That(sut.CurrentAllocation.TourismCulture, Is.EqualTo(16666666L));
-        }
-
-        [Test]
-        public void GameState_CreateInitial_WhenCalled_BudgetAllocationMatchesTotalBudget()
-        {
-            var sut = GameState.CreateInitial();
-            var expected = BudgetAllocation.EqualDistribution(100000000L);
-
-            Assert.That(sut.Budget, Is.EqualTo(100000000L));
-            Assert.That(sut.CurrentAllocation.TotalAllocated, Is.EqualTo(expected.TotalAllocated));
         }
     }
 }

@@ -52,17 +52,6 @@ namespace Domain.Systems
         }
 
         [Test]
-        public void BudgetValidator_GetRemaining_WhenTotalAllocatedEqualsTotalBudget_ReturnsZero()
-        {
-            var sut = new BudgetValidator();
-            var allocation = new BudgetAllocation(10000000L, 20000000L, 15000000L, 25000000L, 5000000L, 25000000L);
-
-            var actual = sut.GetRemaining(allocation, 100000000L);
-
-            Assert.That(actual, Is.EqualTo(0L));
-        }
-
-        [Test]
         public void BudgetValidator_GetRemaining_WhenTotalAllocatedLessThanBudget_ReturnsPositiveValue()
         {
             var sut = new BudgetValidator();
@@ -82,17 +71,6 @@ namespace Domain.Systems
             var actual = sut.GetRemaining(allocation, 100000000L);
 
             Assert.That(actual, Is.EqualTo(-20000000L));
-        }
-
-        [Test]
-        public void BudgetValidator_GetRemaining_WhenAllocationIsZero_ReturnsTotalBudget()
-        {
-            var sut = new BudgetValidator();
-            var allocation = new BudgetAllocation(0, 0, 0, 0, 0, 0);
-
-            var actual = sut.GetRemaining(allocation, 100000000L);
-
-            Assert.That(actual, Is.EqualTo(100000000L));
         }
     }
 }

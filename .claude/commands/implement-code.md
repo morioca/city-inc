@@ -12,7 +12,7 @@ Implement code that satisfies the specifications in $ARGUMENTS using TDD.
    - Repeat until all tests compile and fail as expected, then commit to Git
 
 3. Green Phase — Make tests pass:
-   - Implement production code to pass the tests
+   - Implement all production code listed in the spec (new files and modified files)
    - Run tests via the test-runner agent; confirm all pass
    - Repeat until all tests pass, then commit to Git
 
@@ -24,4 +24,4 @@ Implement code that satisfies the specifications in $ARGUMENTS using TDD.
 5. If new functionality was added, update `/specs/deliverables.md`.
 
 For test writing, use the Task tool with `subagent_type="test-writer"`, providing the spec file path.
-For test execution, use the Task tool with `subagent_type="test-runner"`, providing the affected class names, namespaces, and assembly names.
+For test execution, use the Task tool with `subagent_type="test-runner"`, providing all test class names, namespaces, and assembly names listed in the spec.

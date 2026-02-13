@@ -30,6 +30,11 @@ namespace Presentation
         private GameState _currentState;
 
         /// <summary>
+        /// Gets the current game state.
+        /// </summary>
+        public GameState CurrentState => _currentState;
+
+        /// <summary>
         /// Set the initial game state and update the UI.
         /// </summary>
         /// <param name="initialState">The initial game state</param>
@@ -38,6 +43,21 @@ namespace Presentation
             _currentState = initialState;
             UpdateDateLabel();
             UpdateMetricLabels();
+        }
+
+        /// <summary>
+        /// Update the current budget allocation.
+        /// </summary>
+        /// <param name="allocation">The new budget allocation</param>
+        public void UpdateAllocation(BudgetAllocation allocation)
+        {
+            _currentState = new GameState(
+                _currentState.CurrentDate,
+                _currentState.Population,
+                _currentState.Budget,
+                _currentState.ApprovalRating,
+                allocation
+            );
         }
 
         /// <summary>

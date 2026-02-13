@@ -23,3 +23,4 @@ Follow the review policy in `.claude/rules/03-test-case-review.md`.
 7. Report: how many tests were removed/consolidated and why.
 
 Do not delete tests that are the sole detector of a meaningful regression.
+Edit only `.cs` files. Do not touch spec file.

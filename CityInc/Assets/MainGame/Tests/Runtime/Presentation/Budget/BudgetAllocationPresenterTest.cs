@@ -91,34 +91,6 @@ namespace Presentation.Budget
         }
 
         [UnityTest]
-        public IEnumerator Initialize_WhenCalledWithGameState_DisplaysTotalBudget()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<BudgetAllocationPresenter>();
-            var gameState = GameState.CreateInitial();
-            var validator = new BudgetValidator();
-            yield return null;
-
-            sut.Initialize(gameState, validator);
-
-            Assert.That(sut.TotalBudgetLabel.text, Contains.Substring("100,000,000"));
-        }
-
-        [UnityTest]
-        public IEnumerator Initialize_WhenCalledWithEqualDistribution_DisplaysEqualAllocationOnSliders()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<BudgetAllocationPresenter>();
-            var gameState = GameState.CreateInitial();
-            var validator = new BudgetValidator();
-            yield return null;
-
-            sut.Initialize(gameState, validator);
-
-            Assert.That(sut.WelfareSlider.value, Is.EqualTo(16666666));
-        }
-
-        [UnityTest]
         public IEnumerator Initialize_WhenCalledWithValidAllocation_ShowsZeroRemaining()
         {
             _sutObject = CreateSystemUnderTestObject();
@@ -146,22 +118,6 @@ namespace Presentation.Budget
             sut.Initialize(gameState, validator);
 
             Assert.That(sut.RemainingBudgetLabel.text, Contains.Substring("10,000,000"));
-        }
-
-        [UnityTest]
-        public IEnumerator OnSliderValueChanged_WhenWelfareSliderChanges_UpdatesWelfareLabels()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<BudgetAllocationPresenter>();
-            var gameState = GameState.CreateInitial();
-            var validator = new BudgetValidator();
-            yield return null;
-            sut.Initialize(gameState, validator);
-
-            sut.WelfareSlider.value = 20000000;
-            yield return null;
-
-            Assert.That(sut.WelfareAmountLabel.text, Contains.Substring("20,000,000"));
         }
 
         [UnityTest]
@@ -236,43 +192,6 @@ namespace Presentation.Budget
         }
 
         [UnityTest]
-        public IEnumerator OnSliderValueChanged_WhenSliderSetToZero_AcceptsZeroAllocation()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<BudgetAllocationPresenter>();
-            var gameState = GameState.CreateInitial();
-            var validator = new BudgetValidator();
-            yield return null;
-            sut.Initialize(gameState, validator);
-
-            sut.WelfareSlider.value = 0;
-            yield return null;
-
-            Assert.That(sut.WelfareAmountLabel.text, Contains.Substring("0"));
-        }
-
-        [UnityTest]
-        public IEnumerator OnSliderValueChanged_WhenSliderSetToMaxBudget_AcceptsFullAllocation()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<BudgetAllocationPresenter>();
-            var gameState = GameState.CreateInitial();
-            var validator = new BudgetValidator();
-            yield return null;
-            sut.Initialize(gameState, validator);
-
-            sut.WelfareSlider.value = 100000000;
-            sut.EducationSlider.value = 0;
-            sut.IndustrySlider.value = 0;
-            sut.InfrastructureSlider.value = 0;
-            sut.DisasterSlider.value = 0;
-            sut.TourismSlider.value = 0;
-            yield return null;
-
-            Assert.That(sut.WelfareAmountLabel.text, Contains.Substring("100,000,000"));
-        }
-
-        [UnityTest]
         public IEnumerator OnConfirmButtonClicked_WhenAllocationIsValid_EmitsAllocationEvent()
         {
             _sutObject = CreateSystemUnderTestObject();
@@ -324,19 +243,5 @@ namespace Presentation.Budget
             Assert.That(sut.WelfareSlider.value, Is.EqualTo(30000000));
         }
 
-        [UnityTest]
-        public IEnumerator Initialize_WhenCalledWithZeroBudget_DisplaysZeroValues()
-        {
-            _sutObject = CreateSystemUnderTestObject();
-            var sut = _sutObject.GetComponent<BudgetAllocationPresenter>();
-            var allocation = BudgetAllocation.EqualDistribution(0);
-            var gameState = CreateGameStateWithBudget(0, allocation);
-            var validator = new BudgetValidator();
-            yield return null;
-
-            sut.Initialize(gameState, validator);
-
-            Assert.That(sut.ConfirmButton.interactable, Is.True);
-        }
     }
 }
